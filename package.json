@@ -15,5 +15,6 @@
   },
   "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"
-  }
+  },
+  "browserslist": "last 2 versions, > 0.5%, not dead"
 }
