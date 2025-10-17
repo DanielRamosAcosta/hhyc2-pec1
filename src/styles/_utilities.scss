@@ -1,0 +1,56 @@
+// =============================================================================
+// UTILITIES - Helpers y clases de utilidad
+// =============================================================================
+
+@use "variables" as *;
+
+// Text alignment
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+// Visibility
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Spacing utilities
+.mt-sm {
+  margin-block-start: $space-sm;
+}
+
+.mt-md {
+  margin-block-start: $space-md;
+}
+
+.mt-lg {
+  margin-block-start: $space-lg;
+}
+
+.mb-sm {
+  margin-block-end: $space-sm;
+}
+
+.mb-md {
+  margin-block-end: $space-md;
+}
+
+.mb-lg {
+  margin-block-end: $space-lg;
+}

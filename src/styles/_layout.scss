@@ -1,0 +1,76 @@
+// =============================================================================
+// LAYOUT - Grid, containers, espaciados
+// =============================================================================
+
+@use "variables" as *;
+
+// Container
+.container {
+  inline-size: 100%;
+  margin-inline: auto;
+  padding-inline: $space-sm;
+
+  @media (width >= 640px) {
+    max-inline-size: $container-sm;
+  }
+
+  @media (width >= 768px) {
+    max-inline-size: $container-md;
+    padding-inline: $space-md;
+  }
+
+  @media (width >= 1024px) {
+    max-inline-size: $container-lg;
+    padding-inline: $space-lg;
+  }
+
+  @media (width >= 1280px) {
+    max-inline-size: $container-xl;
+  }
+}
+
+// Section spacing
+.section {
+  padding-block: $space-2xl;
+
+  @media (width >= 768px) {
+    padding-block: $space-3xl;
+  }
+}
+
+// Grid utilities
+.grid {
+  display: grid;
+  gap: $space-md;
+}
+
+.grid-cols-2 {
+  @media (width >= 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.grid-cols-3 {
+  @media (width >= 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// Flex utilities
+.flex {
+  display: flex;
+  gap: $space-md;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.flex-column {
+  flex-direction: column;
+}

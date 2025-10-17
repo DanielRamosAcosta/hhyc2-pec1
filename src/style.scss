@@ -1,5 +1,7 @@
-/* Import modern-normalize CSS reset */
+@use "styles/medias";
+@use "styles/variables";
+@use "styles/base";
+@use "styles/layout";
+@use "styles/utilities";
 @import "modern-normalize/modern-normalize.css";
-
-/* Import FontAwesome */
 @import "@fortawesome/fontawesome-free/css/all.min.css";

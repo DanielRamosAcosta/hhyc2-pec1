@@ -1,0 +1,111 @@
+// =============================================================================
+// BASE - Estilos base y tipografía
+// =============================================================================
+
+@use "variables" as *;
+
+// Box sizing reset
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// Root
+:root {
+  // CSS custom properties for colors
+  --color-primary: #{$color-primary};
+  --color-secondary: #{$color-secondary};
+  --color-accent: #{$color-accent};
+  --color-detail: #{$color-detail};
+  --color-text: #{$color-text};
+  --color-text-light: #{$color-text-light};
+  --color-bg: #{$color-bg};
+  --color-bg-alt: #{$color-bg-alt};
+
+  // Spacing
+  --space-xs: #{$space-xs};
+  --space-sm: #{$space-sm};
+  --space-md: #{$space-md};
+  --space-lg: #{$space-lg};
+  --space-xl: #{$space-xl};
+  --space-2xl: #{$space-2xl};
+  --space-3xl: #{$space-3xl};
+}
+
+// Body
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: $color-text;
+  background-color: $color-bg;
+  margin: 0;
+  padding: 0;
+}
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-heading;
+  line-height: $line-height-tight;
+  margin-block: 0 $space-md;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: $font-size-h1;
+}
+
+h2 {
+  font-size: $font-size-h2;
+}
+
+h3 {
+  font-size: $font-size-h3;
+}
+
+// Paragraphs
+p {
+  margin-block: 0 $space-sm;
+}
+
+// Links
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: color-mix(in oklch, $color-primary 80%, black);
+  }
+}
+
+// Lists
+ul,
+ol {
+  margin-block: 0 $space-sm;
+  padding-inline-start: $space-lg;
+}
+
+// Images
+img {
+  max-inline-size: 100%;
+  block-size: auto;
+  display: block;
+}
+
+// Buttons
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+}
