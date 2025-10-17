@@ -99,6 +99,8 @@ La diferencia entre `sass` y `sass-embedded` es que este último usa la implemen
 
 Lo siguiente ha sido configurar postcss, creando el fichero `.postcssrc.json` configurando los plugins de `postcss-preset-env` y `autoprefixer`.
 
+Luego he configurado los browserlists, para que estén igual que en el boilerplate original, añadiendo la propiedad `browserslist` en el `package.json` con el valor `last 2 versions, > 0.5%, not dead`.
+
 /*
 
 #lorem(700)
