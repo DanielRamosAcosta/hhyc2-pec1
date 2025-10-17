@@ -67,6 +67,25 @@ Todo está configurado para funcionar automáticamente con Parcel, sin necesidad
 
 == Boilerplate personalizado
 
+El objetivo es crear un boilerplate similar al propuesto por la asignatura, pero usando vite y cutting edge features.
+
+Otra de las cosas que me gustaría mantener como objetivo, es usar las features modernas de CSS para evitar depender tanto de preprocesadores como Sass/SCSS. Muchas features que antes ofrencían ya están incluidas en el estándar, y son seguras gracias a la compatibilidad que ofrecen herramientas como PostCSS con postcss-preset-env.
+
+=== Paso uno: instalar vite
+
+he instalado vite usando:
+
+```bash
+npm create vite@latest
+```
+
+#figure(image("images/vite-setup.jpg"), caption: [
+    Setup de instalación de vite
+])
+
+Se ha elegido la plantilla de vanilla, ya que en esta PEC no vamos a usar ningún framework web como React.
+
+Se han seleccionado opciones por defecto para el resto de opciones.
 
 /*
 
