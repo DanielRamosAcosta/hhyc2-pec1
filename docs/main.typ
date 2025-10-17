@@ -101,6 +101,10 @@ Lo siguiente ha sido configurar postcss, creando el fichero `.postcssrc.json` co
 
 Luego he configurado los browserlists, para que estén igual que en el boilerplate original, añadiendo la propiedad `browserslist` en el `package.json` con el valor `last 2 versions, > 0.5%, not dead`.
 
+No hace falta LightningCSS ya que vite usa esbuild para la minificación de CSS en producción, que es muy rápido y eficiente.
+
+Respecto a PostHTML, se ha decidido usar `vite-plugin-posthtml`, que permite usar PostHTML como transformador en vite. He instalado la dependencia y he configurado el plugin en el `vite.config.mjs`.
+
 /*
 
 #lorem(700)

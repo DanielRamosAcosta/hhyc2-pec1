@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@vituum/vite-plugin-posthtml": "^1.1.0",
     "postcss-preset-env": "^10.4.0",
     "sass-embedded": "^1.93.2",
     "vite": "npm:rolldown-vite@7.1.14"
