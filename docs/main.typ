@@ -97,6 +97,8 @@ npm install -D sass-embedded
 
 La diferencia entre `sass` y `sass-embedded` es que este último usa la implementación oficial de Dart Sass, mientras que `sass` usa una versión compilada a JS. La versión embebida suele ser más rápida y estar más actualizada.
 
+Lo siguiente ha sido configurar postcss, creando el fichero `.postcssrc.json` configurando los plugins de `postcss-preset-env` y `autoprefixer`.
+
 /*
 
 #lorem(700)

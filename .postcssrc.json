@@ -1,0 +1,15 @@
+{
+  "plugins": {
+    "postcss-preset-env": {
+      "stage": 1,
+      "features": {
+        "custom-media-queries": true,
+        "logical-properties-and-values": true,
+        "media-query-ranges": true,
+        "color-functional-notation": true,
+        "lab-function": true
+      }
+    },
+    "autoprefixer": {}
+  }
+}
