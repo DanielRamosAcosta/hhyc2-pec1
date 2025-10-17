@@ -1,0 +1,148 @@
+@use "variables" as *;
+
+.footer {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #e0e0e0;
+  padding-block: $space-3xl;
+
+  &__content {
+    display: grid;
+    gap: $space-xl;
+    margin-block-end: $space-2xl;
+
+    @media (width >= 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $space-2xl;
+    }
+
+    @media (width >= 1024px) {
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    color: $color-bg;
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    margin-block-end: $space-sm;
+
+    i {
+      color: $color-accent;
+    }
+  }
+
+  &__text {
+    line-height: 1.7;
+    color: #b0b0b0;
+    font-size: $font-size-base;
+  }
+
+  &__location {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    color: #b0b0b0;
+    font-size: $font-size-base;
+
+    i {
+      color: $color-primary;
+      font-size: $font-size-lg;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  &__link {
+    color: #b0b0b0;
+    font-size: $font-size-base;
+    transition: all $transition-base;
+    inline-size: fit-content;
+
+    &:hover {
+      color: $color-primary;
+      padding-inline-start: $space-xs;
+    }
+
+    &::before {
+      content: "→ ";
+      opacity: 0;
+      transition: opacity $transition-base;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+  }
+
+  &__social {
+    display: flex;
+    gap: $space-md;
+    flex-wrap: wrap;
+  }
+
+  &__social-link {
+    inline-size: 3rem;
+    block-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: color-mix(in oklab, $color-primary 20%, #2d2d2d);
+    color: $color-bg;
+    border-radius: $radius-md;
+    font-size: $font-size-xl;
+    transition: all $transition-base;
+
+    &:hover {
+      background-color: $color-primary;
+      transform: translateY(-0.25rem);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary;
+      outline-offset: 2px;
+    }
+  }
+
+  &__bottom {
+    padding-block-start: $space-xl;
+    border-block-start: 1px solid color-mix(in oklab, $color-bg 20%, #2d2d2d);
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+    text-align: center;
+
+    @media (width >= 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__copyright,
+  &__credits {
+    font-size: $font-size-sm;
+    color: #888;
+
+    a {
+      color: $color-primary;
+      transition: color $transition-base;
+
+      &:hover {
+        color: $color-accent;
+      }
+    }
+  }
+}
