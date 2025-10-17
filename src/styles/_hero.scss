@@ -1,0 +1,61 @@
+@use "variables" as *;
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 60vh;
+  background: linear-gradient(135deg, $color-primary 0%, $color-accent 100%);
+  color: $color-bg;
+  text-align: center;
+  padding-block: $space-3xl;
+
+  @media (width >= 768px) {
+    min-block-size: 80vh;
+  }
+
+  @media (width >= 1024px) {
+    min-block-size: 100vh;
+  }
+
+  &__content {
+    z-index: 1;
+  }
+
+  &__title {
+    color: $color-bg;
+    margin-block-end: $space-md;
+    text-shadow: $shadow-lg;
+  }
+
+  &__subtitle {
+    font-size: $font-size-lg;
+    margin-block-end: $space-xl;
+    opacity: 0.95;
+
+    @media (width >= 768px) {
+      font-size: $font-size-xl;
+    }
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    padding-block: $space-sm $space-md;
+    padding-inline: $space-lg $space-xl;
+    background-color: $color-bg;
+    color: $color-primary;
+    font-size: $font-size-lg;
+    font-weight: 700;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-lg;
+    transition: all $transition-base;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgb(0 0 0 / 20%);
+    }
+  }
+}
