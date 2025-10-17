@@ -111,6 +111,29 @@ Para javascript no hace falta configurar Babel, ya que vite usa esbuild para tra
 
 Para las imágenes, se ha instalado `vite-plugin-image-optimizer`, que usa Sharp para optimizar las imágenes durante la construcción y SVGO para optimizar SVGs.
 
+Se ha copiado el .editorconfig del boilerplate original para mantener la consistencia en el formato del código.
+
+
+El siguiente paso fue configurar stylelint para mantener un código CSS/SCSS limpio y consistente. He escogido BEM como convención de nombres para las clases CSS, pero justificaré esto más adelante. Se instaló la dependencia y se creó el fichero `.stylelintrc.json` con las reglas necesarias para usar stylelint con SCSS y BEM.
+
+Y por último, aunque esto no estaba en el boilerplate original, he añadido Prettier para mantener el código formateado automáticamente. He instalado la dependencia y creado un fichero `.prettierrc` con las opciones por defecto.
+
+=== Pruebas del boilerplate
+
+Se han realizado pruebas para ver que todo funciona. Añadir código que necesitaría autoprefixing y ver que se genera bien, añadir parciales y ver que PostHTML los incluye correctamente, añadir imágenes y ver que se optimizan, añadir errores en CSS y ver que stylelint los detecta, descuadrar el formato y ver que Prettier lo arregla.
+
+== Escogiendo una metodología de CSS
+
+Se han barajado las metodologías propuestas en módulo 2. Después de analizar OOCSS, BEM, SMACSS, e ITCSS, se ha decidido usar BEM (Block Element Modifier).
+
+La industra ha estado pivotando a metodologías orientadas a componentes (Atomic Design), prueba de ello es el surgimiento de herramientas como React, Vue, etc. BEM es una metodología que encaja bien con este enfoque.
+
+Además, usando CSS nesting, se puede mantener el código más limpio y organizado. Incluso creo que un buen equilibro puede ser usar BEM junto con algunas ideas de HTML semántico y accessible @CSSBEMAtomicDesign.
+
+Las otras metodologías se han descartado porque !!TODO!!
+
+Por ejemplo, para dar estilios a un componente de paginación, podemos usar una clase .pagination, pero para seleccionar la página actual podemos usar el selector de atributo `[aria-current="page"]`, que es semántico y accesible.
+
 /*
 
 #lorem(700)
@@ -152,3 +175,5 @@ La bibliografía debe incluirse mediante un archivo `.bib` con el mismo nombre q
 
 #bibliography("./references/example.bib")
 */
+
+#bibliography("./references.bib")

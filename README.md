@@ -2,7 +2,7 @@
 
 ## Presentación
 
-Con esta PEC empezamos la evaluación contínua de la asignatura Herramientas HTML y CSS II. Se propone un pequeño reto de desarrollo de un web de una sola página, partiendo de UOC Boilerplate, y en que se deberán aplicar los conocimientos adquiridos en los módulos 1 y 2.  El encargo tiene unos requisitos mínimos que se especifican en el apartado de Descripción. Todo el proceso que sigas deberá de estar documentado, y deberás entregar exactamente lo que se pide en el apartado de Formato y fecha de entrega para poder ser evaluado.
+Con esta PEC empezamos la evaluación contínua de la asignatura Herramientas HTML y CSS II. Se propone un pequeño reto de desarrollo de un web de una sola página, partiendo de UOC Boilerplate, y en que se deberán aplicar los conocimientos adquiridos en los módulos 1 y 2. El encargo tiene unos requisitos mínimos que se especifican en el apartado de Descripción. Todo el proceso que sigas deberá de estar documentado, y deberás entregar exactamente lo que se pide en el apartado de Formato y fecha de entrega para poder ser evaluado.
 
 El peso de esta PEC es de un **25%** de la nota de la evaluación contínua.
 
