@@ -105,6 +105,12 @@ No hace falta LightningCSS ya que vite usa esbuild para la minificación de CSS 
 
 Respecto a PostHTML, se ha decidido usar `vite-plugin-posthtml`, que permite usar PostHTML como transformador en vite. He instalado la dependencia y he configurado el plugin en el `vite.config.mjs`.
 
+Por defecto vite no realiza minificación de HTML en producción, por lo que he añadido el plugin `vite-plugin-html-minifier` para realizar esta tarea.
+
+Para javascript no hace falta configurar Babel, ya que vite usa esbuild para transpilar y minificar JS en producción.
+
+Para las imágenes, se ha instalado `vite-plugin-image-optimizer`, que usa Sharp para optimizar las imágenes durante la construcción y SVGO para optimizar SVGs.
+
 /*
 
 #lorem(700)
