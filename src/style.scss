@@ -73,10 +73,12 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+
+  &:hover {
+    border-color: #646cff;
+  }
 }
-button:hover {
-  border-color: #646cff;
-}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -92,5 +94,60 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+
+/* 1) Custom media + media ranges */
+@custom-media --md (width >= 48rem);
+
+:root {
+  /* 2) Variables + funciones de color modernas */
+  --brand: oklch(65% 0.2 240);
+  --brand-weak: color-mix(in oklab, var(--brand) 40%, white);
+}
+
+/* 3) Nesting, :is(), :where(), pseudo moderno */
+.card {
+  display: grid;
+  gap: 1rem;
+  padding-block: 1rem;          /* propiedades lógicas */
+  padding-inline: clamp(1rem, 2vw, 2rem);
+
+  &::before {
+    content: "";
+    inline-size: 100%;
+    block-size: 4px;
+    background: linear-gradient(to right, var(--brand), var(--brand-weak));
+  }
+
+  &:is(:hover, :focus-visible) {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  /* :where() + selector descendiente */
+  & :where(a) {
+    color: var(--brand);
+    text-decoration: underline;
+  }
+}
+
+/* 4) :has() (ojo: polyfill parcial) */
+.nav:has(.active) {
+  background: var(--brand-weak);
+}
+
+/* 5) Media query moderna: custom media expandida por PostCSS */
+@media (--md) {
+  .card {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+/* 6) Media query con rangos directos */
+@media (width < 30rem) {
+  .card {
+    padding-inline: 0.75rem;
   }
 }

@@ -87,6 +87,16 @@ Se ha elegido la plantilla de vanilla, ya que en esta PEC no vamos a usar ningú
 
 Se han seleccionado opciones por defecto para el resto de opciones.
 
+=== Configurando herramientas
+
+El primer paso ha sido configurar sass. Para ello, he renombrado el archivo `style.css` a `style.scss`, y he instalado la dependencia de sass:
+
+```bash
+npm install -D sass-embedded
+```
+
+La diferencia entre `sass` y `sass-embedded` es que este último usa la implementación oficial de Dart Sass, mientras que `sass` usa una versión compilada a JS. La versión embebida suele ser más rápida y estar más actualizada.
+
 /*
 
 #lorem(700)
