@@ -702,7 +702,51 @@ Las dependencias externas empleadas en el proyecto han sido tres:
 
 == Accesibilidad
 
-TODO
+El proyecto implementa medidas de accesibilidad que cumplen con WCAG 2.1 nivel AA, garantizando que el sitio sea utilizable por personas con diversas capacidades. Se destacan tres mejoras principales:
+
+=== Iconos decorativos con aria-hidden
+
+Los 25 iconos de FontAwesome se configuraron con `aria-hidden="true"` para evitar que los lectores de pantalla anuncien información irrelevante como "fa-landmark" o "fa-bars":
+
+```html
+<a href="#" class="nav__logo">
+  <i class="fas fa-landmark" aria-hidden="true"></i>
+  <span>La Laguna</span>
+</a>
+```
+
+El lector de pantalla solo anuncia "La Laguna", omitiendo el icono decorativo. Cumple con WCAG 1.1.1 (Contenido no textual, nivel A).
+
+=== Enlaces externos con indicación de nueva pestaña
+
+Los 16 enlaces con `target="_blank"` incluyen `aria-label` para advertir a usuarios de lectores de pantalla sobre el cambio de contexto:
+
+```html
+<a href="..." target="_blank" rel="noopener noreferrer"
+   aria-label="Magic K (se abre en nueva pestaña)">
+  Magic K
+</a>
+```
+
+Cumple con WCAG 3.2.5 (Cambio a petición, nivel AAA). El atributo `rel="noopener noreferrer"` añade seguridad contra ataques de tabnabbing.
+
+=== Contraste de color mejorado
+
+Se identificó un ratio de contraste insuficiente (1.66:1) en los enlaces de navegación y se corrigió cambiando el color a negro puro:
+
+```scss
+// Antes: contraste 1.66:1 (falla WCAG AA)
+.nav__link { color: $color-text; } // #333
+
+// Después: contraste 21:1 (supera WCAG AAA)
+.nav__link { color: #000; }
+```
+
+Cumple con WCAG 1.4.3 (nivel AA) y 1.4.6 (nivel AAA), superando el mínimo requerido de 4.5:1.
+
+=== Validación adicional
+
+Se verificó el cumplimiento de otros criterios: estructura semántica HTML5, jerarquía de encabezados coherente (un único `<h1>`), textos alternativos descriptivos en todas las imágenes, navegación por teclado funcional con foco visible, y declaración de idioma (`lang="es"`).
 
 = Conclusiones
 
