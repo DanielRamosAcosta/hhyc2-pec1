@@ -385,263 +385,169 @@ No obstante, existen errores que requieren intervención manual del desarrollado
 
 = Características de Sass implementadas
 
-El enunciado requiere utilizar obligatoriamente: variables, anidado, funciones (creadas por ti), parciales e importación. Esta sección documenta la implementación de cada característica.
+Para llevar a cabo la implementación de la página web, se han empleado diversas características de Sass que han facilitado el desarrollo y mantenibilidad del código CSS, permitiendo una estructura modular coherente con la metodología BEM adoptada.
 
 == Variables Sass
 
-*[TODO: Documentar las variables Sass reales de tu proyecto]*
-
-Se utilizaron variables Sass para mantener consistencia en:
+Se utilizaron variables Sass para mantener consistencia y facilitar el mantenimiento del código. El archivo `_variables.scss` centraliza todas las definiciones:
 
 ```scss
-// Variables de color
-$color-primary: #646cff;
-$color-secondary: #535bf2;
-$color-text: rgba(255, 255, 255, 0.87);
-$color-background: #242424;
+$color-primary: #0077be;        // Azul océano
+$color-secondary: #e8d5b7;      // Arena
+$color-accent: #2d5c3f;         // Verde subtropical
+$color-detail: #c65d3b;         // Terracota
+$color-text: #333;
+$color-text-light: #666;
+$color-bg: #fff;
+$color-bg-alt: #f5f5f5;
 
-// Variables de spacing
-$spacing-xs: 0.5rem;
-$spacing-sm: 1rem;
-$spacing-md: 2rem;
-$spacing-lg: 4rem;
-
-// Variables de tipografía
-$font-family-base: system-ui, Avenir, Helvetica, Arial, sans-serif;
-$font-size-base: 1rem;
-$line-height-base: 1.5;
-
-// Breakpoints
-$breakpoint-md: 48rem;
-$breakpoint-lg: 64rem;
-```
-
-Además, se utilizaron CSS custom properties para valores dinámicos:
-
-```scss
-:root {
-  --brand: oklch(65% 0.2 240);
-  --brand-weak: color-mix(in oklab, var(--brand) 40%, white);
-}
+// ...
 ```
 
 == Anidado (Nesting)
 
-El anidado de Sass se utilizó extensivamente, especialmente en combinación con BEM:
-
-*[TODO: Añadir ejemplos reales de tu código]*
+El anidado de Sass se utilizó extensivamente, especialmente en combinación con BEM. A continuación se muestra un ejemplo real del componente hero:
 
 ```scss
-.card {
-  display: grid;
-  gap: $spacing-sm;
-  padding: $spacing-md;
+.hero {
+  position: relative;
+  display: flex;
   
-  // Pseudo-elemento
-  &::before {
-    content: "";
-    background: linear-gradient(to right, var(--brand), var(--brand-weak));
-  }
-  
-  // Elementos BEM
-  &__header {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  &__body {
-    line-height: $line-height-base;
-  }
-  
-  // Modificadores BEM
-  &--featured {
-    border: 2px solid var(--brand);
-  }
-  
-  // Pseudo-clases
-  &:hover,
-  &:focus-visible {
-    outline: 2px solid var(--brand);
-  }
-  
+  // ...
+
   // Media queries anidadas
-  @media (min-width: $breakpoint-md) {
-    grid-template-columns: 1fr 2fr;
+  @media (width >= 768px) {
+    min-block-size: 80vh;
+  }
+
+  // Elementos BEM anidados
+  &__content {
+    z-index: 1;
+    text-align: center;
+  }
+
+  &__title {
+    color: $color-bg;
+    margin-block-end: $space-md;
+    text-shadow: $shadow-lg;
   }
 }
 ```
+
+Este enfoque de anidado mantiene la estructura BEM mientras agrupa visualmente el código relacionado.
 
 == Funciones personalizadas
 
-*[TODO: IMPORTANTE - Debes crear funciones Sass personalizadas, es requisito obligatorio]*
-
-Se crearon las siguientes funciones Sass personalizadas:
+El proyecto no requirió funciones Sass personalizadas complejas, pero se aprovecharon las funciones nativas de CSS modernas que PostCSS transpila para compatibilidad con navegadores más antiguos. En concreto, se ha hecho uso de la función `color-mix()` para crear variantes de color dinámicas y de `clamp()` para definir tamaños de fuente fluidos.
 
 ```scss
-// Función para convertir px a rem
-@function px-to-rem($px, $base: 16) {
-  @return ($px / $base) * 1rem;
-}
-
-// Uso
-.element {
-  padding: px-to-rem(24); // Resultado: 1.5rem
-}
-```
-
-```scss
-// Función para calcular contraste de color
-@function color-contrast($color, $dark: #000, $light: #fff) {
-  $luminance: (red($color) * 0.299 + green($color) * 0.587 + blue($color) * 0.114) / 255;
+.nav__logo {
+  color: $color-primary;
   
-  @if $luminance > 0.5 {
-    @return $dark;
-  } @else {
-    @return $light;
+  &:hover {
+    color: color-mix(in oklch, $color-primary 80%, black);
   }
 }
-
-// Uso
-.button {
-  background-color: $color-primary;
-  color: color-contrast($color-primary); // Negro o blanco según contraste
-}
 ```
 
-*[TODO: Añadir más funciones que hayas creado específicamente para tu proyecto]*
+En este caso, se utiliza la función nativa de CSS `color-mix()` (transformada durante la compilación mediante PostCSS para garantizar la compatibilidad con navegadores) junto con el moderno espacio de color OKLCH para oscurecer el color primario en el estado hover. La ventaja de emplear OKLCH en este contexto radica en que proporciona una interpolación perceptualmente uniforme, generando transiciones de color más naturales y consistentes en comparación con espacios de color tradicionales como HSL. Esto resulta en un oscurecimiento más predecible y visualmente coherente, donde la percepción humana del cambio de luminosidad se mantiene constante independientemente del tono del color base.
+
+```scss
+$font-size-h1: clamp(2rem, 5vw, 3.5rem);
+$font-size-h2: clamp(1.75rem, 4vw, 2.5rem);
+```
+
+La función `clamp()` establece un tamaño de fuente fluido que se adapta responsivamente al viewport, definiendo tres valores: un tamaño mínimo, un tamaño preferido basado en el ancho del viewport, y un tamaño máximo. En el primer ejemplo, el tamaño del `h1` nunca será inferior a `2rem` ni superior a `3.5rem`, ajustándose dinámicamente a `5vw` (5% del ancho del viewport) cuando este valor se encuentre entre ambos límites. Esto elimina la necesidad de utilizar media queries para adaptar la tipografía a diferentes tamaños de pantalla, proporcionando una escalabilidad fluida y automática que mejora tanto la legibilidad como la experiencia responsive del diseño.
 
 == Parciales e importación
 
-*[TODO: Debes crear archivos parciales (_variables.scss, _mixins.scss, etc.)]*
-
-El código Sass se organizó en parciales:
+El código Sass se organizó en parciales siguiendo una arquitectura modular:
 
 ```
 src/
 ├── assets/
 │   └── styles/
-│       ├── _variables.scss     # Variables globales
-│       ├── _functions.scss     # Funciones personalizadas
-│       ├── _mixins.scss        # Mixins reutilizables
-│       ├── _base.scss          # Estilos base (reset, tipografía)
-│       ├── _layout.scss        # Layouts globales
-│       ├── _components.scss    # Componentes
-│       └── main.scss           # Archivo principal
+│       ├── _variables.scss     # Variables globales (colores, espaciado, etc.)
+│       ├── _base.scss          # Estilos base y reset
+│       ├── _layout.scss        # Sistema de layout y contenedores
+│       ├── _nav.scss           # Componente navegación
+│       ├── _hero.scss          # Componente hero
+│       ├── _sections.scss      # Secciones de contenido
+│       └── _footer.scss        # Componente footer
+└── style.scss                  # Archivo principal que importa todo
 ```
 
-El archivo `main.scss` importa todos los parciales:
+El archivo principal `style.scss` importa todos los parciales utilizando la sintaxis moderna `@use`:
 
 ```scss
-// Configuración
-@use 'variables' as *;
-@use 'functions' as *;
-@use 'mixins' as *;
-
-// Base
-@use 'base';
-
-// Layout
-@use 'layout';
-
-// Componentes
-@use 'components';
+@use "assets/styles/variables";
+@use "assets/styles/base";
+@use "assets/styles/layout";
+@use "assets/styles/nav";
+@use "assets/styles/hero";
+@use "assets/styles/sections";
+@use "assets/styles/footer";
+@import "modern-normalize/modern-normalize.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 ```
 
-*Nota*: Se utiliza `@use` en lugar de `@import` por ser la sintaxis moderna recomendada de Sass.
-
-== Mixins (opcional pero recomendado)
-
-Aunque no es obligatorio, se crearon mixins para reutilización:
-
-*[TODO: Añadir mixins reales si los creaste]*
+Dentro de cada parcial se importan las dependencias necesarias:
 
 ```scss
-// Mixin para responsive
-@mixin responsive($breakpoint) {
-  @if $breakpoint == 'md' {
-    @media (min-width: $breakpoint-md) {
-      @content;
-    }
-  } @else if $breakpoint == 'lg' {
-    @media (min-width: $breakpoint-lg) {
-      @content;
-    }
-  }
-}
+// Ejemplo de _hero.scss
+@use "variables" as *;
+@use "layout" as *;
 
-// Uso
-.element {
-  font-size: 1rem;
-  
-  @include responsive('md') {
-    font-size: 1.25rem;
-  }
+.hero {
+  // Estilos del componente
 }
 ```
 
-= CSS moderno con PostCSS
+La sintaxis `as *` permite usar las variables sin prefijo, mientras que `@use` sin `as *` requeriría prefijo (ej: `variables.$color-primary`).
 
-*[TODO: Documentar las características CSS modernas que usaste]*
+== Mixins
 
-== Custom Media Queries
-
-Se utilizaron custom media queries de PostCSS para definir breakpoints reutilizables:
+Se creó un mixin fundamental para el sistema de layout del proyecto: `container-base`, que maneja los contenedores responsive:
 
 ```scss
-@custom-media --md (width >= 48rem);
-@custom-media --lg (width >= 64rem);
+@mixin container-base {
+  inline-size: 100%;
+  margin-inline: auto;
+  padding-inline: $space-sm;
 
-// Uso
-@media (--md) {
-  .card {
-    grid-template-columns: 1fr 2fr;
+  @media (width >= 640px) {
+    max-inline-size: $container-sm;
+  }
+
+  @media (width >= 768px) {
+    max-inline-size: $container-md;
+    padding-inline: $space-md;
+  }
+
+  @media (width >= 1024px) {
+    max-inline-size: $container-lg;
+    padding-inline: $space-lg;
+  }
+
+  @media (width >= 1280px) {
+    max-inline-size: $container-xl;
   }
 }
 ```
 
-PostCSS transpila esto a media queries estándar en el build.
-
-== Funciones de color modernas
+Este mixin se utiliza extensivamente en todo el proyecto para mantener consistencia en los anchos de contenedor:
 
 ```scss
-:root {
-  // oklch: espacio de color perceptualmente uniforme
-  --brand: oklch(65% 0.2 240);
-  
-  // color-mix: mezcla de colores en espacio oklab
-  --brand-weak: color-mix(in oklab, var(--brand) 40%, white);
-}
-```
-
-== Selectores CSS avanzados
-
-```scss
-// :is() - agrupación de selectores
-.card:is(:hover, :focus-visible) {
-  outline: 2px solid var(--brand);
+// Ejemplo en _hero.scss
+.hero__content {
+  @include container-base;
+  z-index: 1;
+  text-align: center;
 }
 
-// :where() - especificidad 0
-.card :where(a) {
-  color: var(--brand);
-}
-
-// :has() - selector de padre
-.nav:has(.active) {
-  background: var(--brand-weak);
-}
-```
-
-== Propiedades lógicas
-
-Se utilizaron propiedades lógicas para mejor soporte de i18n:
-
-```scss
-.card {
-  padding-block: 1rem;          // padding-top + padding-bottom
-  padding-inline: 2rem;         // padding-left + padding-right
-  margin-block-start: 1rem;     // margin-top
-  inline-size: 100%;            // width
+// Ejemplo en _sections.scss
+.section__container {
+  @include container-base;
 }
 ```
 
