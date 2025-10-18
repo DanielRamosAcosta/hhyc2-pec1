@@ -553,46 +553,91 @@ Este mixin se utiliza extensivamente en todo el proyecto para mantener consisten
 
 = Diseño responsive
 
-*[TODO: Documentar tu estrategia responsive completa]*
+Esta sección documenta la estrategia responsive implementada en el proyecto, incluyendo el enfoque mobile-first, los breakpoints definidos y las técnicas empleadas para garantizar una experiencia óptima en todos los dispositivos.
 
 == Enfoque Mobile-First
 
-*[TODO: ¿Usaste mobile-first o desktop-first? Justificar]*
+El proyecto adoptó un enfoque mobile-first, donde los estilos base se definen para dispositivos móviles y posteriormente se añaden adaptaciones para pantallas más grandes mediante media queries. Esta aproximación se fundamenta en las siguientes razones:
 
-Se adoptó un enfoque mobile-first por las siguientes razones:
+1. *Priorización de contenido*: El diseño mobile-first obliga a identificar y priorizar los elementos esenciales de la interfaz, eliminando elementos superfluos y centrándose en la experiencia del usuario.
 
-1. *Priorización de contenido*: Obliga a priorizar lo más importante
-2. *Performance*: Los dispositivos móviles reciben menos CSS innecesario
-3. *Progressive enhancement*: Se añaden features para pantallas más grandes
-4. *Tendencia actual*: La mayoría del tráfico web es móvil
+2. *Progressive enhancement*: Se añaden features y complejidad visual progresivamente para pantallas más grandes, garantizando que la experiencia base funcione en todos los dispositivos.
+
+3. *Tendencia actual del tráfico web*: La mayoría del tráfico web proviene de dispositivos móviles, por lo que priorizar esta experiencia resulta coherente con los patrones de uso reales.
 
 == Breakpoints definidos
 
+El proyecto define breakpoints utilizando la sintaxis moderna de CSS con comparaciones de rangos, que PostCSS transpila para compatibilidad con navegadores que no la soportan aún:
+
 ```scss
-@custom-media --md (width >= 48rem);   // Tablets y superiores
-@custom-media --lg (width >= 64rem);   // Desktop
-@custom-media --xl (width >= 80rem);   // Pantallas grandes
+// Breakpoints principales
+640px   // Móviles grandes / tablets pequeñas
+768px   // Tablets
+1024px  // Desktop / laptops
+1280px  // Desktop grande
 ```
 
-== Testing responsive
+Estos valores se emplean consistentemente en todo el código mediante media queries:
 
-*[TODO: Documentar cómo probaste el diseño responsive]*
+```scss
+// Ejemplo del mixin container-base
+@media (width >= 640px) {
+  max-inline-size: $container-sm;
+}
 
-Se testeó el diseño en:
-- Chrome DevTools (viewport presets)
-- Firefox Responsive Design Mode
-- Safari Technology Preview
-- Dispositivos físicos: *[TODO: listar]*
+@media (width >= 768px) {
+  max-inline-size: $container-md;
+  padding-inline: $space-md;
+}
+
+@media (width >= 1024px) {
+  max-inline-size: $container-lg;
+  padding-inline: $space-lg;
+}
+
+@media (width >= 1280px) {
+  max-inline-size: $container-xl;
+}
+```
+
+La sintaxis `(width >= 768px)` es más legible y expresiva que la tradicional `(min-width: 768px)`, alineándose con las especificaciones modernas de CSS Media Queries Level 4.
+
+== Técnicas responsive implementadas
+
+=== Tipografía fluida con clamp()
+
+Se utilizó la función `clamp()` para crear escalas tipográficas que se adaptan fluidamente al viewport:
+
+```scss
+$font-size-h1: clamp(2rem, 5vw, 3.5rem);
+$font-size-h2: clamp(1.75rem, 4vw, 2.5rem);
+$font-size-h3: clamp(1.5rem, 3vw, 2rem);
+```
+
+Esta técnica elimina la necesidad de múltiples media queries para ajustar tamaños de fuente.
+
+=== Layouts adaptativos con CSS Grid
+
+Se empleó CSS Grid para crear layouts que se adaptan automáticamente según el espacio disponible:
+
+```scss
+.landscapes__grid {
+  display: grid;
+  grid-template-columns: 1fr;  // Móvil: 1 columna
+  
+  @media (width >= 768px) {
+    grid-template-columns: repeat(2, 1fr);  // Tablet: 2 columnas
+  }
+  
+  @media (width >= 1024px) {
+    grid-template-columns: repeat(3, 1fr);  // Desktop: 3 columnas
+  }
+}
+```
 
 = Compilación para producción
 
-*[TODO: Documentar el proceso de build y resultados]*
-
-== Proceso de build
-
-```bash
-npm run build
-```
+El proceso de construcción (build) para generar la versión de producción del proyecto resulta sumamente sencillo, requiriendo únicamente la ejecución del comando `npm run build`, que compila y optimiza automáticamente todos los recursos necesarios para el despliegue en producción.
 
 El proceso de build ejecuta:
 
@@ -605,151 +650,60 @@ El proceso de build ejecuta:
 7. Generación de source maps
 8. Output en carpeta `dist/`
 
-== Resultados obtenidos
-
-*[TODO: Añadir métricas reales del build]*
-
-Métricas del build de producción:
-
-- Tamaño CSS: *[TODO]* KB (minificado)
-- Tamaño JS: *[TODO]* KB (minificado)
-- Tamaño imágenes: *[TODO]* KB (optimizadas)
-- Tiempo de build: *[TODO]* segundos
-- Total dist/: *[TODO]* KB
-
-== Comparación con desarrollo
-
-*[TODO: Comparar tamaño de archivos entre dev y prod]*
-
 = Publicación
 
 == Repositorio en GitHub
 
-*Estructura del repositorio*:
+TODO
 
-```
-hhyc2-pec1/
-├── .github/
-│   └── copilot-instructions.md
-├── dist/                    # Build de producción
-├── docs/                    # Documentación Typst
-├── src/                     # Código fuente
-├── .editorconfig
-├── .gitignore
-├── .prettierrc
-├── .stylelintrc.json
-├── package.json
-├── README.md
-└── vite.config.js (si aplica)
-```
-
-*URL del repositorio*: `[TODO: Añadir URL de GitHub]`
+*URL del repositorio*: TODO
 
 == Deployment en Netlify
 
-*[TODO: Documentar el proceso de deployment en Netlify]*
+TODO
 
 === Configuración del deployment
 
-1. Conectar repositorio GitHub con Netlify
-2. Configurar build settings:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-3. Configurar variables de entorno (si aplica)
-4. Activar Continuous Deployment
+TODO
 
 === URL pública
 
-*URL de producción*: `[TODO: Añadir URL de Netlify]`
+TODO
 
 === Verificación
 
-*[TODO: Capturas de pantalla del sitio desplegado]*
-
-Se verificó que:
-- ✅ El sitio es accesible públicamente
-- ✅ Todos los assets se cargan correctamente
-- ✅ El diseño responsive funciona
-- ✅ No hay errores en la consola del navegador
-- ✅ Performance es adecuada (Lighthouse: *[TODO]*)
+TODO
 
 = Decisiones adicionales de diseño y desarrollo
 
-*[TODO: Documentar cualquier otra decisión importante que tomaras]*
+TODO
 
 == Dependencias externas añadidas
 
-*[TODO: ¿Añadiste FontAwesome u otra librería? Documentar]*
+TODO
 
 == Accesibilidad
 
-*[TODO: Documentar consideraciones de accesibilidad]*
-
-Se aplicaron las siguientes prácticas de accesibilidad:
-
-- HTML semántico (`<header>`, `<nav>`, `<main>`, `<article>`, `<footer>`)
-- Atributos ARIA donde necesario
-- Contraste de colores adecuado (mínimo AA)
-- Foco visible en elementos interactivos
-- Alt text en todas las imágenes
-- Estructura de headings lógica
-
-== Optimizaciones de performance
-
-*[TODO: Documentar optimizaciones aplicadas]*
-
-- Lazy loading de imágenes
-- Optimización de imágenes con Sharp
-- Minificación de assets
-- Tree shaking de JavaScript
-- CSS crítico inline (si aplica)
+TODO
 
 = Conclusiones
 
-*[TODO: Escribir conclusiones finales]*
+TODO
 
 == Objetivos alcanzados
 
-Este proyecto ha permitido:
-
-1. *Implementar un workflow moderno*: Vite, Sass, PostCSS, Stylelint, Prettier
-2. *Aplicar metodología BEM*: Nomenclatura consistente en todos los componentes
-3. *Dominar herramientas de calidad*: Stylelint con reglas personalizadas
-4. *Utilizar características avanzadas de Sass*: Variables, funciones, mixins, parciales
-5. *Desarrollar diseño responsive*: Mobile-first, breakpoints con custom media
-6. *Publicar profesionalmente*: GitHub + Netlify con continuous deployment
+TODO
 
 == Aprendizajes clave
 
-*[TODO: Reflexionar sobre lo aprendido]*
-
-Los principales aprendizajes fueron:
-
-- La importancia de una metodología CSS estructurada para mantenibilidad
-- Cómo configurar herramientas de linting para enforcar convenciones
-- Las ventajas de CSS moderno (custom properties, nesting, funciones de color)
-- El valor de automatización mediante bundlers y build tools
-- Workflow profesional de desarrollo frontend
+TODO
 
 == Retos encontrados y soluciones
 
-*[TODO: Documentar problemas y cómo los resolviste]*
-
-Principales desafíos:
-
-1. *[TODO: Problema 1]*: Solución aplicada...
-2. *[TODO: Problema 2]*: Solución aplicada...
+TODO
 
 == Posibles mejoras futuras
 
-*[TODO: Ideas para mejorar el proyecto]*
-
-Áreas de mejora identificadas:
-
-- Implementar testing visual (Percy, Chromatic)
-- Añadir pre-commit hooks con Husky
-- Mejorar accesibilidad con testing automatizado (axe-core)
-- Implementar Service Worker para offline support
-- Añadir analytics y monitoreo de performance
+TODO
 
 #bibliography("./references.bib")
