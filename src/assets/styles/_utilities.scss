@@ -1,8 +1,5 @@
 @use "variables" as *;
 
-// BEM Exception: Accessibility utility
-// .sr-only is kept as a standard accessibility pattern
-// Reference: https://www.a11yproject.com/posts/how-to-hide-content/
 .sr-only {
   position: absolute;
   inline-size: 1px;

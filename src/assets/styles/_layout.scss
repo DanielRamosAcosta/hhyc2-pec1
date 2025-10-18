@@ -1,7 +1,6 @@
 @use "variables" as *;
 
-// BEM: Container mixin for reuse across components
-// stylelint-disable no-invalid-position-declaration -- Mixin with logical properties
+/* stylelint-disable no-invalid-position-declaration */
 @mixin container-base {
   inline-size: 100%;
   margin-inline: auto;
@@ -25,4 +24,4 @@
     max-inline-size: $container-xl;
   }
 }
-// stylelint-enable no-invalid-position-declaration
+/* stylelint-enable no-invalid-position-declaration */
