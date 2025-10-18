@@ -772,8 +772,4 @@ TODO
 
 TODO
 
-== Posibles mejoras futuras
-
-TODO
-
 #bibliography("./references.bib")
