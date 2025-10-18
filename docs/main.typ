@@ -682,11 +682,23 @@ Finalmente, se ha realizado una prueba exhaustiva del despliegue en Netlify, ver
 
 = Decisiones adicionales de diseño y desarrollo
 
-TODO
+Respecto al diseño visual de la web, se ha optado por un *enfoque minimalista* inspirado en el estilo de Bootstrap, incorporando únicamente los elementos estrictamente necesarios para el desarrollo de esta práctica, sin sobrecargar la interfaz con componentes superfluos.
+
+En cuanto al desarrollo, como se ha mencionado anteriormente, se ha seleccionado *BEM como metodología CSS* debido a su afinidad natural con el paradigma de desarrollo orientado a componentes previamente trabajado en asignaturas anteriores.
+
+Otro aspecto relevante del enfoque adoptado es la priorización de *características modernas nativas de CSS*, considerando más pertinente aprovechar funcionalidades que forman parte del estándar actual del lenguaje en lugar de depender exclusivamente de las capacidades proporcionadas por preprocesadores específicos.
+
+De hecho, resulta cada vez más complejo justificar la dependencia absoluta de preprocesadores CSS, dado que el *estándar del lenguaje ha experimentado avances significativos* en los últimos años, incorporando de forma nativa las características más relevantes que anteriormente requerían el uso de estas herramientas adicionales.
 
 == Dependencias externas añadidas
 
-TODO
+Las dependencias externas empleadas en el proyecto han sido tres:
+
+- *scrollreveal*: librería que permite implementar animaciones activadas mediante el desplazamiento del scroll, ampliamente utilizada en landing pages para crear efectos visuales que mejoran la experiencia de usuario al revelar progresivamente el contenido conforme se navega por la página.
+
+- *modern-normalize*: hoja de estilos que normaliza las inconsistencias CSS entre diferentes navegadores, proporcionando una base consistente y predecible para el desarrollo al estandarizar los estilos por defecto de los elementos HTML, asegurando así un comportamiento uniforme independientemente del navegador utilizado.
+
+- *fontawesome*: conjunto completo de iconos vectoriales que facilita la incorporación de elementos gráficos escalables y personalizables mediante clases CSS, eliminando la necesidad de gestionar múltiples archivos de imágenes individuales.
 
 == Accesibilidad
 
