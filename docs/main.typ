@@ -8,6 +8,8 @@
     author: "Daniel Ramos Acosta",
 )
 
+#outline()
+
 = Introducción
 
 Esta práctica corresponde a la primera evaluación continua (PEC1) de la asignatura Herramientas HTML y CSS II, con un peso del 25% sobre la nota final. El objetivo principal es desarrollar un sitio web responsive de una sola página aplicando un workflow moderno de desarrollo frontend.
@@ -654,25 +656,29 @@ El proceso de build ejecuta:
 
 == Repositorio en GitHub
 
-TODO
+Se ha configurado un repositorio público en GitHub conforme a los requisitos establecidos en el enunciado de la práctica.
 
-*URL del repositorio*: TODO
+*URL del repositorio*: https://github.com/DanielRamosAcosta/hhyc2-pec1
 
 == Deployment en Netlify
 
-TODO
+El despliegue en Netlify ha resultado un proceso sumamente sencillo. En primer lugar, se ha establecido la conexión con GitHub, concediendo los permisos necesarios que la plataforma requería para acceder al repositorio.
 
-=== Configuración del deployment
+Una vez completado este paso, se ha seleccionado el repositorio correspondiente a la práctica, momento en el cual Netlify ha detectado automáticamente que se trataba de un proyecto Vite, recomendando la configuración exacta para su correcta compilación y despliegue.
 
-TODO
+#figure(image("images/netlify.jpg"), caption: [
+_Overview_ del proyecto en Netlify
+])
 
-=== URL pública
+Finalmente, se ha aplicado la configuración recomendada por la plataforma y el proyecto se ha desplegado correctamente, quedando accesible en el entorno de producción.
 
-TODO
+#figure(image("images/netlify-deployed.jpg"), caption: [
+El sitio web desplegado en Netlify
+])
 
-=== Verificación
+Finalmente, se ha realizado una prueba exhaustiva del despliegue en Netlify, verificando que todos los recursos se cargan correctamente, que la web mantiene su comportamiento responsive en diferentes dispositivos y resoluciones, y que todas las funcionalidades operan según lo esperado en el entorno de producción.
 
-TODO
+*URL del sitio desplegado*: https://dra-hhyc2-pec1.netlify.app/
 
 = Decisiones adicionales de diseño y desarrollo
 
@@ -687,6 +693,8 @@ TODO
 TODO
 
 = Conclusiones
+
+== Uso de Inteligencia Artificial
 
 TODO
 
