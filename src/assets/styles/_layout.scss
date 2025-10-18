@@ -1,5 +1,9 @@
 @use "variables" as *;
 
+/*
+ * Falso positivo de stylelint: las propiedades lógicas (inline-size, margin-inline, padding-inline)
+ * no requieren 'position', pero el linter las detecta erróneamente como propiedades de posicionamiento
+ */
 /* stylelint-disable no-invalid-position-declaration */
 @mixin container-base {
   inline-size: 100%;
