@@ -14,9 +14,9 @@ Esta práctica corresponde a la primera evaluación continua (PEC1) de la asigna
 
 == Contexto del proyecto
 
-*[TODO: Descripción de la ciudad/tema elegido para el proyecto]*
+Para esta práctica he decidido crear una landing page sobre San Cristóbal de La Laguna, ciudad declarada Patrimonio de la Humanidad por la UNESCO y lugar donde nací. Esta elección tiene un componente personal significativo, ya que me permite combinar el aprendizaje técnico con la promoción del patrimonio cultural de mi ciudad natal.
 
-El proyecto consiste en crear una landing page informativa sobre *[CIUDAD/TEMA]*, implementando las mejores prácticas de desarrollo web moderno, utilizando preprocesadores CSS, automatización de tareas, y metodologías de arquitectura CSS.
+El proyecto consiste en crear una landing page informativa sobre San Cristóbal de La Laguna, implementando las mejores prácticas de desarrollo web moderno, utilizando preprocesadores CSS, automatización de tareas, y metodologías de arquitectura CSS. La página destaca aspectos como la rica historia de la ciudad, sus paisajes únicos entre el centro histórico y el litoral, y su reconocida gastronomía canaria.
 
 == Objetivos
 
@@ -112,80 +112,75 @@ El objetivo fue crear un boilerplate equivalente al propuesto por la asignatura,
 
 === Filosofía del proyecto
 
-Se establecieron dos principios fundamentales:
+Se establecieron dos principios fundamentales para la migración del stack tecnológico:
 
-1. *CSS moderno primero*: Aprovechar características nativas de CSS (custom properties, nesting, funciones de color modernas) en lugar de depender exclusivamente de preprocesadores
-2. *Compatibilidad garantizada*: Utilizar PostCSS con postcss-preset-env para asegurar soporte en navegadores objetivo
+1. *Equivalencia funcional*: Mantener el comportamiento y las características del UOC Boilerplate original, replicando todas sus capacidades de transformación, optimización y desarrollo.
 
-Esta aproximación permite escribir código más cercano al estándar web, mientras se mantiene la compatibilidad necesaria mediante transpilación automática.
+2. *Modernización del motor*: Implementar todo sobre Vite para aprovechar sus características de velocidad, HMR mejorado y experiencia de desarrollo superior, sin sacrificar ninguna funcionalidad.
+
+El enfoque no fue cambiar radicalmente el boilerplate, sino traducir el stack de Parcel a Vite de forma que:
+- Las herramientas sean similares o equivalentes (Sharp, PostCSS, Sass, etc.)
+- El output final sea comparable en calidad y optimización
+- El workflow de desarrollo se mantenga familiar para quien conozca el boilerplate oficial
+- Se gane en velocidad de desarrollo y build sin perder capacidades
+
+En resumen: mismo comportamiento, mismas características, motor más moderno.
 
 === Instalación inicial de Vite
 
-La instalación de Vite se realizó mediante el scaffolding oficial:
+La instalación del entorno de trabajo se llevó a cabo utilizando el *scaffolding* oficial de Vite mediante el siguiente comando:
 
 ```bash
 npm create vite@latest
 ```
 
+Durante el proceso de configuración se seleccionó la plantilla *vanilla*, ya que en esta práctica no se empleará ningún *framework* web como React. Para el resto de opciones, se mantuvieron los valores predeterminados proporcionados por la herramienta.
+
 #figure(image("images/vite-setup.jpg"), caption: [
-    Setup de instalación de vite
+Setup de instalación de Vite
 ])
 
-Se ha elegido la plantilla de vanilla, ya que en esta PEC no vamos a usar ningún framework web como React.
+== Configuración de herramientas de preprocesado y optimización
 
-Se han seleccionado opciones por defecto para el resto de opciones.
-
-=== Configuración de herramientas y dependencias
-
-==== Sass: Preprocesador CSS
-
-Se configuró Sass como preprocesador CSS, renombrando `style.css` a `style.scss` e instalando la implementación oficial:
+Con el entorno base ya creado, se procedió a configurar las herramientas necesarias para el preprocesamiento y la optimización del código fuente. En primer lugar, se incorporó *Sass* como preprocesador de CSS, renombrando el archivo principal `style.css` a `style.scss` e instalando la implementación oficial:
 
 ```bash
 npm install -D sass-embedded
 ```
 
-La diferencia entre `sass` y `sass-embedded` es que este último usa la implementación oficial de Dart Sass, mientras que `sass` usa una versión compilada a JS. La versión embebida suele ser más rápida y estar más actualizada.
+La elección de `sass-embedded` frente a `sass` responde a que esta versión utiliza la implementación oficial de Dart Sass, que ofrece un rendimiento superior y una actualización más constante que la versión compilada a JavaScript.
 
-Lo siguiente ha sido configurar postcss, creando el fichero `.postcssrc.json` configurando los plugins de `postcss-preset-env` y `autoprefixer`.
+Posteriormente, se configuró *PostCSS* creando el archivo `.postcssrc.json`, en el que se añadieron los *plugins* `postcss-preset-env` y `autoprefixer`. Además, se estableció la lista de navegadores objetivo mediante la propiedad `browserslist` en el `package.json`, con el valor `"last 2 versions, > 0.5%, not dead"`, replicando así la configuración del *boilerplate* original.
 
-Luego he configurado los browserlists, para que estén igual que en el boilerplate original, añadiendo la propiedad `browserslist` en el `package.json` con el valor `last 2 versions, > 0.5%, not dead`.
+No fue necesario incluir *LightningCSS*, ya que Vite utiliza *esbuild* para la minificación del CSS en producción, garantizando un rendimiento óptimo.
 
-No hace falta LightningCSS ya que vite usa esbuild para la minificación de CSS en producción, que es muy rápido y eficiente.
+En cuanto al tratamiento del HTML, se integró el *plugin* `vite-plugin-posthtml`, que permite procesar los archivos HTML mediante *PostHTML*. Dado que Vite no realiza minificación de HTML de forma nativa, se añadió también el *plugin* `vite-plugin-html-minifier` con el fin de optimizar los archivos durante el proceso de compilación.
 
-Respecto a PostHTML, se ha decidido usar `vite-plugin-posthtml`, que permite usar PostHTML como transformador en vite. He instalado la dependencia y he configurado el plugin en el `vite.config.mjs`.
+Para el código JavaScript, no se consideró necesario incorporar *Babel*, puesto que Vite también delega en *esbuild* las tareas de transpilación y minificación, cumpliendo sobradamente los requisitos del proyecto.
 
-Por defecto vite no realiza minificación de HTML en producción, por lo que he añadido el plugin `vite-plugin-html-minifier` para realizar esta tarea.
+Finalmente, para optimizar los recursos gráficos, se instaló el *plugin* `vite-plugin-image-optimizer`, el cual emplea *Sharp* para el procesado de imágenes rasterizadas y *SVGO* para la optimización de gráficos vectoriales.
 
-Para javascript no hace falta configurar Babel, ya que vite usa esbuild para transpilar y minificar JS en producción.
+Como medida de coherencia estilística, se copió además el archivo `.editorconfig` del *boilerplate* original, asegurando la consistencia en el formato del código fuente a lo largo del proyecto.
 
-Para las imágenes, se ha instalado `vite-plugin-image-optimizer`, que usa Sharp para optimizar las imágenes durante la construcción y SVGO para optimizar SVGs.
+== Control de calidad del código: Stylelint y Prettier
 
-Se ha copiado el .editorconfig del boilerplate original para mantener la consistencia en el formato del código.
-
-
-==== Stylelint: Linting de CSS/SCSS
-
-Se configuró Stylelint como herramienta de validación y linting para mantener un código CSS/SCSS limpio y consistente. Se instalaron las dependencias necesarias y se creó el fichero `.stylelintrc.json` con reglas específicas para SCSS y la metodología BEM (que se justificará en detalle en la siguiente sección).
+Con el objetivo de mantener un código limpio y homogéneo, se configuraron herramientas de validación y formateo. En primer lugar, se implementó *Stylelint* como sistema de *linting* para los archivos CSS y SCSS. Se instalaron las dependencias necesarias y se creó el fichero `.stylelintrc.json` con un conjunto de reglas adaptadas al uso de SCSS y la metodología BEM, que será analizada con más detalle en la sección siguiente.
 
 ```bash
 npm install -D stylelint stylelint-config-standard-scss \
   stylelint-selector-bem-pattern
 ```
 
-==== Prettier: Formateo automático de código
+Adicionalmente, se incorporó *Prettier*, que aunque no formaba parte del *boilerplate* original, se consideró una herramienta esencial para asegurar la uniformidad en el estilo del código. Su configuración se realizó a través del archivo `.prettierrc`, sincronizado con las directrices definidas en `.editorconfig`.
 
-Aunque no estaba incluido en el boilerplate original, se añadió Prettier para mantener el código formateado automáticamente de forma consistente. Se instaló la dependencia y se creó un fichero `.prettierrc` alineado con las configuraciones de `.editorconfig`.
+Ambas herramientas comparten criterios de formato, entre los que destacan:
 
-```bash
-npm install -D prettier
-```
+- Indentación de dos espacios.
+- Uso de fin de línea tipo LF (Unix).
+- Codificación de caracteres en UTF-8.
+- Eliminación automática de los espacios en blanco finales.
 
-La configuración de Prettier se sincronizó con EditorConfig para mantener consistencia en:
-- Indentación: 2 espacios
-- Fin de línea: LF (Unix)
-- Charset: UTF-8
-- Trailing whitespace: eliminado automáticamente
+Esta configuración unificada garantiza un entorno de desarrollo coherente y una base de código más legible y mantenible a largo plazo.
 
 === Comandos del proyecto
 
@@ -201,20 +196,13 @@ El `package.json` se configuró con los siguientes scripts:
 
 === Validación del entorno
 
-Se realizaron pruebas exhaustivas para verificar el correcto funcionamiento de todas las herramientas:
+Por último, se llevaron a cabo diversas pruebas de validación con el fin de comprobar el correcto funcionamiento del _boilerplate_. En primer lugar, se verificó el comportamiento de *Autoprefixer* utilizando características modernas de CSS y comprobando que se generaban correctamente los _vendor prefixes_. Posteriormente, se evaluó la optimización de imágenes mediante una compilación de prueba, confirmando que los archivos resultantes se procesaban de forma eficiente.
 
-*[TODO: Añadir capturas de pantalla de las pruebas realizadas]*
-
-- ✅ *Autoprefixing*: Código CSS con prefijos vendor generados automáticamente
-- ✅ *PostHTML*: Inclusión de parciales HTML funcionando correctamente
-- ✅ *Optimización de imágenes*: Sharp procesando imágenes, SVGO optimizando SVGs
-- ✅ *Stylelint*: Detección de errores CSS y validación de nomenclatura BEM
-- ✅ *Prettier*: Auto-formateo de código al guardar
-- ✅ *HMR*: Hot reload funcionando sin recarga completa de página
+Asimismo, se introdujeron errores deliberados en los archivos SCSS para comprobar que *Stylelint* detectaba adecuadamente las infracciones definidas en las reglas de estilo. También se incluyó contenido HTML de prueba —como botones y otros elementos básicos— con el propósito de verificar el funcionamiento del procesamiento mediante *PostHTML*. Finalmente, se validó el correcto comportamiento del entorno de desarrollo, asegurando que la recarga en caliente (*HMR*, _Hot Module Replacement_) operara de manera fluida durante la edición de los archivos fuente.
 
 == Instalación y configuración de dependencias
 
-*[TODO: Detallar el proceso completo de npm install, posibles errores encontrados y resolución]*
+En general, el proceso de instalación de las dependencias resultó sencillo. En muchos casos, bastó con intentar utilizar determinadas características (como Sass) para que el propio Vite indicara el error correspondiente junto con el comando exacto necesario para instalar la dependencia faltante. En cuanto al resto de herramientas y _plugins_, su incorporación se realizó consultando la documentación oficial de cada una y siguiendo las instrucciones de configuración recomendadas.
 
 === Gestión de dependencias
 
@@ -239,99 +227,36 @@ Esta sección justifica la elección de BEM como metodología de arquitectura CS
 
 == Análisis de metodologías disponibles
 
-Se evaluaron las cuatro metodologías principales estudiadas en el módulo 2:
+En relación con las diversas arquitecturas y metodologías CSS analizadas, OOCSS se posiciona como una solución intermedia entre los enfoques utility-first y las metodologías orientadas a componentes como BEM. No obstante, esta aproximación presenta limitaciones significativas, particularmente la tendencia a generar una proliferación descontrolada de clases o la necesidad de crear clases excesivamente específicas para casos particulares, lo cual puede comprometer la mantenibilidad del código a largo plazo.
 
-=== OOCSS (Object-Oriented CSS)
+Por su parte, SMACSS podría resultar viable en el contexto de un sistema de diseño cerrado y bien definido. Sin embargo, su principal debilidad radica en la excesiva estratificación de la arquitectura CSS, especialmente en la distinción entre las capas de layout y module. Desde una perspectiva contemporánea de desarrollo, resulta más coherente adoptar un concepto unificado de "componente" que englobe tanto elementos como cards o headers, sin establecer distinciones innecesarias entre ellos, ya que ambos constituyen unidades funcionales equivalentes dentro de la interfaz.
 
-*Características principales*:
-- Separación de estructura y diseño
-- Separación de contenedor y contenido
-- Reutilización mediante objetos CSS independientes
+ITCSS adolece de problemas similares a los de SMACSS, manifestando una organización excesivamente fragmentada en múltiples capas que dificulta la cohesión del sistema. Esta complejidad estructural puede obstaculizar tanto el desarrollo como el mantenimiento del código en proyectos reales.
 
-*Ventajas*:
-- Alta reutilización de código
-- Componentes muy modulares
-- Reduce duplicación de CSS
-
-*Desventajas para este proyecto*:
-- Curva de aprendizaje inicial elevada
-- Puede generar muchas clases en el HTML
-- Requiere disciplina estricta en el equipo
-
-=== BEM (Block Element Modifier)
-
-*Características principales*:
-- Nomenclatura clara y predecible: `.block__element--modifier`
-- Componentes autocontenidos (bloques)
-- Evita conflictos de nombres mediante especificidad plana
-
-*Ventajas*:
-- Nomenclatura explícita y fácil de entender
-- Excelente para componentes (alineado con Atomic Design)
-- Compatible con CSS nesting de Sass
-- Ampliamente adoptado en la industria
-
-*Desventajas*:
-- Nombres de clase pueden ser largos
-- Requiere adherencia estricta a la convención
-
-=== SMACSS (Scalable and Modular Architecture for CSS)
-
-*Características principales*:
-- 5 categorías: Base, Layout, Module, State, Theme
-- Organización por capas conceptuales
-- Prefijos para indicar categoría
-
-*Ventajas*:
-- Estructura clara del proyecto
-- Separación lógica de responsabilidades
-- Escalable para proyectos grandes
-
-*Desventajas para este proyecto*:
-- Más adecuado para proyectos con múltiples páginas
-- Puede ser excesivo para un sitio de una sola página
-
-=== ITCSS (Inverted Triangle CSS)
-
-*Características principales*:
-- 7 capas ordenadas por especificidad
-- Forma de triángulo invertido
-- Settings → Tools → Generic → Elements → Objects → Components → Utilities
-
-*Ventajas*:
-- Organización muy estructurada
-- Control fino de la cascada CSS
-- Ideal para sistemas de diseño grandes
-
-*Desventajas para este proyecto*:
-- Complejidad innecesaria para un proyecto pequeño
-- Requiere disciplina en mantener la jerarquía
+En contraste, BEM emerge como la alternativa más sólida y pragmática para el desarrollo en contextos profesionales. BEM trasciende la mera definición de arquitectura para constituirse como una metodología integral de desarrollo. Su principal fortaleza reside en la cohesión que proporciona al estructurar el CSS en torno al concepto de bloque, equivalente al concepto de componente. Adicionalmente, su sistema de nomenclatura específico previene eficazmente los conflictos de especificidad, un problema recurrente en proyectos de envergadura. Por estas razones, BEM ha sido seleccionado como la metodología base para este proyecto.
 
 == Justificación de la elección de BEM
 
-Se seleccionó BEM como metodología principal por las siguientes razones:
+En esta sección se llevará a cabo un análisis detallado de las ventajas que, tras un proceso de evaluación comparativa, condujeron a la elección definitiva de la metodología BEM como enfoque principal para la organización y estructuración del código.
 
 === Adecuación al tipo de proyecto
 
-Un sitio web informativo sobre una ciudad se compone naturalmente de *componentes identificables*:
+Un sitio web informativo dedicado a una ciudad se estructura, de forma natural, a partir de componentes claramente identificables, que pueden organizarse de la siguiente manera:
 
-- Tarjetas de lugares de interés (`.card`)
-- Navegación (`.nav`)
-- Galería de imágenes (`.gallery`)
 - Sección hero (`.hero`)
+- Navegación (`.nav`)
 - Footer con información (`.footer`)
+- Card de noticias (`.news-card`)
 
-BEM permite nombrar estos componentes de forma clara y mantener su estilo encapsulado.
+La metodología *BEM* facilita la asignación de nombres precisos a cada uno de estos componentes, lo que contribuye a mantener un estilo coherente, modular y encapsulado, favoreciendo así la mantenibilidad y escalabilidad del proyecto.
 
 === Alineación con desarrollo orientado a componentes
 
-La industria web ha evolucionado hacia arquitecturas basadas en componentes (React, Vue, Web Components). BEM se alinea perfectamente con esta filosofía:
+La industria web ha evolucionado hacia arquitecturas basadas en componentes (React, Vue, Web Components). BEM se alinea bastante bien con esta filosofía:
 
 - Cada bloque es un componente independiente
 - Los elementos son las partes internas del componente
 - Los modificadores representan variantes o estados
-
-Como señala @CSSBEMAtomicDesign, BEM es una de las metodologías que mejor se integra con Atomic Design.
 
 === Compatibilidad con Sass nesting
 
@@ -355,21 +280,21 @@ Una de las grandes ventajas de BEM con Sass es la capacidad de usar nesting mien
 }
 ```
 
-Esto mantiene el código organizado visualmente mientras se genera CSS plano con especificidad baja.
+Esto ayuda a mantener el código organizado visualmente mientras se genera CSS plano con especificidad baja.
 
 === Experiencia previa y curva de aprendizaje
 
-*[TODO: Añadir tu experiencia personal con BEM si la tienes]*
-
-BEM tiene una curva de aprendizaje suave y su convención es intuitiva una vez comprendida. La nomenclatura es autoexplicativa: al leer `.pagination__item--active` se entiende inmediatamente que es el elemento "item" del bloque "pagination" con el modificador "active".
+En asignaturas previas se ha trabajado con desarrollos orientados a componentes, particularmente con Angular, lo que ha permitido familiarizarse con la filosofía de componentes encapsulados y aislados que poseen sentido funcional por sí mismos. BEM constituye una extensión natural de este paradigma al ámbito del CSS, proporcionando una metodología de estilos que se alinea coherentemente con los conocimientos previamente adquiridos. Esta continuidad conceptual facilita significativamente su adopción, requiriendo una curva de aprendizaje mínima y permitiendo aplicar de manera consistente los principios de modularidad y encapsulación tanto en la lógica de los componentes como en su presentación visual.
 
 === Ventajas adicionales
 
-- *Tooling*: Excelente soporte en Stylelint mediante plugins específicos
-- *Comunidad*: Ampliamente adoptado, con mucha documentación y ejemplos
-- *Mantenibilidad*: Fácil identificar qué CSS afecta a qué elemento
-- *Refactoring*: Buscar y reemplazar nombres de clase es seguro
+- *Tooling*: BEM cuenta con excelente soporte en herramientas de análisis y validación de código como Stylelint, que dispone de plugins específicos diseñados para verificar el cumplimiento de las convenciones de nomenclatura y detectar posibles inconsistencias en la implementación de la metodología.
 
+- *Comunidad*: La metodología ha sido ampliamente adoptada en la industria del desarrollo web, lo que se refleja en la disponibilidad de abundante documentación, tutoriales, ejemplos prácticos y casos de estudio que facilitan tanto el aprendizaje inicial como la resolución de problemas específicos durante el desarrollo.
+
+- *Mantenibilidad*: La estructura de nomenclatura explícita de BEM permite identificar de manera inmediata y sin ambigüedad qué reglas CSS afectan a cada elemento específico de la interfaz, simplificando significativamente las tareas de mantenimiento y depuración del código.
+
+- *Refactoring*: Las operaciones de refactorización se vuelven más seguras y predecibles gracias al sistema de nomenclatura específico, que permite realizar búsquedas y reemplazos de nombres de clase con confianza, minimizando el riesgo de efectos secundarios no deseados en componentes no relacionados.
 == Aplicación de BEM en el proyecto
 
 === Nomenclatura y convenciones
@@ -388,94 +313,9 @@ El patrón BEM se aplicó siguiendo la convención estándar:
 2. Un elemento siempre pertenece a un bloque: `.card__title`, nunca `.card__header__title`
 3. Los modificadores pueden aplicarse a bloques o elementos: `.button--primary`, `.button__icon--large`
 
-=== Componentes implementados
+=== Reflexión sobre BEM y su vigencia en la actualidad
 
-*[TODO: Listar los componentes BEM reales implementados en tu proyecto]*
-
-Principales bloques implementados:
-
-*Bloque: `.card`*
-```scss
-.card {
-  display: grid;
-  gap: 1rem;
-  
-  &__header {
-    // Cabecera de la tarjeta
-  }
-  
-  &__body {
-    // Contenido principal
-  }
-  
-  &__footer {
-    // Pie de la tarjeta
-  }
-  
-  &--featured {
-    // Tarjeta destacada con estilos especiales
-  }
-}
-```
-
-*Bloque: `.nav`*
-```scss
-.nav {
-  // Navegación principal
-  
-  &__list {
-    list-style: none;
-  }
-  
-  &__item {
-    display: inline-block;
-  }
-  
-  &__link {
-    text-decoration: none;
-    
-    &--active {
-      font-weight: bold;
-    }
-  }
-}
-```
-
-*[TODO: Añadir más ejemplos de componentes reales de tu proyecto]*
-
-=== Integración con HTML semántico
-
-Un aspecto importante fue combinar BEM con HTML semántico y accesible. Por ejemplo, en un componente de paginación:
-
-```html
-<nav class="pagination" aria-label="Paginación">
-  <ul class="pagination__list">
-    <li class="pagination__item">
-      <a href="#" class="pagination__link" aria-current="page">1</a>
-    </li>
-    <li class="pagination__item">
-      <a href="#" class="pagination__link">2</a>
-    </li>
-  </ul>
-</nav>
-```
-
-En este caso:
-- `.pagination` proporciona la estructura visual
-- `<nav>` y `aria-label` proporcionan contexto semántico
-- `aria-current="page"` indica la página actual para lectores de pantalla
-
-Esta combinación permite mantener BEM para estilos mientras se usa HTML semántico para accesibilidad.
-
-=== Casos especiales y decisiones de diseño
-
-*[TODO: Documentar situaciones específicas donde tuviste que tomar decisiones sobre cómo aplicar BEM]*
-
-Algunos casos que requirieron decisiones específicas:
-
-1. *Componentes anidados*: Cómo manejar un componente dentro de otro
-2. *Utilidades globales*: Clases helper que no siguen BEM (ej: `.text-center`)
-3. *Estados dinámicos*: Uso de atributos ARIA vs clases BEM para estados
+Como consideración adicional para futuras investigaciones, resulta pertinente explorar el desarrollo de arquitecturas CSS alternativas. Es fundamental que como profesionales en formación comprendamos estas arquitecturas y metodologías dentro de su contexto histórico específico. La evolución reciente del estándar CSS, particularmente con la incorporación nativa de CSS Nesting y la directiva `@layer`, abre nuevas posibilidades arquitectónicas. Estos avances sugieren que sería factible desarrollar una arquitectura más simplificada que BEM, manteniendo simultáneamente niveles equivalentes de cohesión y capacidad para prevenir problemas de especificidad, adaptándose así a las capacidades actuales del lenguaje.
 
 = Configuración de Stylelint
 
@@ -492,25 +332,11 @@ npm install -D stylelint \
   stylelint-scss
 ```
 
-=== stylelint-config-standard-scss
+La dependencia `stylelint-config-standard-scss` proporciona una configuración base que extiende las reglas estándar de Stylelint específicamente adaptadas para archivos SCSS. Esta configuración abarca reglas de formato como indentación, espaciado y uso de comillas, así como validación de sintaxis SCSS, detección de errores comunes y aplicación de buenas prácticas de desarrollo.
 
-Configuración base que extiende las reglas estándar de Stylelint para archivos SCSS. Incluye:
+El plugin `stylelint-selector-bem-pattern` resulta fundamental para validar la correcta aplicación de la nomenclatura BEM en los selectores de clase, permitiendo definir patrones mediante expresiones regulares que deben cumplir todas las clases CSS del proyecto.
 
-- Reglas de formato (indentación, espaciado, comillas)
-- Validación de sintaxis SCSS
-- Detección de errores comunes
-- Reglas de buenas prácticas
-
-=== stylelint-selector-bem-pattern
-
-Plugin específico para validar la nomenclatura BEM en selectores de clase. Permite definir un patrón regex que deben cumplir las clases CSS.
-
-=== stylelint-scss
-
-Plugin que añade reglas específicas para características de Sass/SCSS como:
-- Validación de `@import`, `@use`, `@forward`
-- Reglas para at-rules personalizadas de Sass
-- Validación de funciones y mixins
+Finalmente, `stylelint-scss` añade soporte específico para las características avanzadas de Sass/SCSS, incluyendo la validación de directivas como `@import`, `@use` y `@forward`, así como reglas para at-rules personalizadas y validación de funciones y mixins propios del preprocesador.
 
 == Configuración de `.stylelintrc.json`
 
@@ -519,98 +345,11 @@ El archivo de configuración se estructuró de la siguiente manera:
 ```json
 {
   "extends": ["stylelint-config-standard-scss"],
-  "plugins": ["stylelint-selector-bem-pattern"],
-  "rules": {
-    "plugin/selector-bem-pattern": {
-      "preset": "bem",
-      "componentSelectors": {
-        "initial": "^\\.{componentName}(?:__[a-z]+(?:-[a-z]+)*)?(?:--[a-z]+(?:-[a-z]+)*)?$",
-        "combined": "^\\.{componentName}(?:__[a-z]+(?:-[a-z]+)*)?(?:--[a-z]+(?:-[a-z]+)*)?$"
-      }
-    },
-    "selector-class-pattern": "^[a-z]+(?:-[a-z]+)*(?:__[a-z]+(?:-[a-z]+)*)?(?:--[a-z]+(?:-[a-z]+)*)?$",
-    "scss/at-rule-no-unknown": [
-      true,
-      {
-        "ignoreAtRules": ["custom-media"]
-      }
-    ],
-    "function-no-unknown": [
-      true,
-      {
-        "ignoreFunctions": ["oklch", "color-mix"]
-      }
-    ],
-    "scss/double-slash-comment-empty-line-before": null,
-    "no-descending-specificity": null
-  }
+  "plugins": ["stylelint-selector-bem-pattern"]
 }
 ```
 
-== Justificación de reglas personalizadas
-
-=== Patrón BEM para clases
-
-La regla `selector-class-pattern` define el patrón regex que deben cumplir todas las clases CSS:
-
-```
-^[a-z]+(?:-[a-z]+)*(?:__[a-z]+(?:-[a-z]+)*)?(?:--[a-z]+(?:-[a-z]+)*)?$
-```
-
-Este patrón permite:
-- `.block` - Bloque simple
-- `.main-block` - Bloque con guiones
-- `.block__element` - Elemento de bloque
-- `.block__main-element` - Elemento con guiones
-- `.block--modifier` - Modificador de bloque
-- `.block__element--modifier` - Modificador de elemento
-
-*[TODO: Añadir ejemplos de clases válidas e inválidas según este patrón]*
-
-=== Soporte para at-rules personalizadas
-
-```json
-"scss/at-rule-no-unknown": [
-  true,
-  {
-    "ignoreAtRules": ["custom-media"]
-  }
-]
-```
-
-Esta regla permite usar `@custom-media` de PostCSS sin que Stylelint lo marque como error. Es necesario porque las custom media queries no son parte del estándar SCSS pero sí de PostCSS.
-
-=== Funciones CSS modernas
-
-```json
-"function-no-unknown": [
-  true,
-  {
-    "ignoreFunctions": ["oklch", "color-mix"]
-  }
-]
-```
-
-Se añaden excepciones para funciones CSS modernas que aún no están en todos los navegadores pero que PostCSS transpila:
-
-- `oklch()`: Espacio de color perceptualmente uniforme
-- `color-mix()`: Mezcla de colores en diferentes espacios de color
-
-=== Reglas desactivadas
-
-Algunas reglas se desactivaron por razones específicas:
-
-```json
-"scss/double-slash-comment-empty-line-before": null
-```
-
-Los comentarios `//` en Sass no requieren línea vacía antes, permitiendo comentarios inline más compactos.
-
-```json
-"no-descending-specificity": null
-```
-
-Esta regla puede generar falsos positivos cuando se usa CSS nesting. Se desactivó para permitir flexibilidad en la estructura del código.
+Se ha validado que con esta configuración básica, Stylelint ya aplica un conjunto sólido de reglas para mantener la calidad del código CSS/SCSS, incluyendo la validación de la sintaxis SCSS y la aplicación de buenas prácticas generales y reglas BEM.
 
 == Proceso de validación
 
@@ -632,52 +371,17 @@ Se configuraron dos comandos en `package.json`:
 
 === Ejemplo de validación
 
-*[TODO: Añadir captura de pantalla de la salida de Stylelint]*
+#figure(image("images/stylelint-error.jpg"), caption: [
+  Error de Stylelint detectado por nomenclatura BEM
+])
 
 Al ejecutar `npm run lint:css`, Stylelint analiza todos los archivos CSS/SCSS y reporta:
 
-```
-src/style.scss
-  160:1  ✖  Expected ".myBadClass" to match pattern
-  165:1  ✖  Expected ".cardContainer" to match pattern
-
-✖ 2 problems (2 errors, 0 warnings)
-```
-
 === Auto-corrección
 
-Muchos errores pueden corregirse automáticamente con `--fix`:
+Stylelint incorpora capacidades de auto-corrección que permiten resolver automáticamente numerosos errores de formato y estilo mediante la opción `--fix`. Entre las correcciones automáticas más comunes se encuentran la simplificación de valores hexadecimales de color (por ejemplo, transformando `#FF0000` en `#F00` según la regla `color-hex-length`), la eliminación de unidades innecesarias en valores nulos (convirtiendo `margin: 0px` en `margin: 0` mediante `length-zero-no-unit`), la normalización del espaciado inconsistente y la reorganización del orden de las declaraciones CSS conforme a las convenciones establecidas.
 
-*Ejemplo de correcciones automáticas*:
-- `#FF0000` → `#F00` (color-hex-length)
-- `margin: 0px` → `margin: 0` (length-zero-no-unit)
-- Espaciado inconsistente → Espaciado normalizado
-- Orden de declaraciones → Reordenado según convención
-
-*Errores que requieren corrección manual*:
-- Nombres de clase que no siguen BEM
-- Selectores con especificidad problemática
-- Reglas CSS duplicadas
-
-=== Integración en el workflow
-
-*[TODO: Documentar si configuraste pre-commit hooks o integración con VS Code]*
-
-Stylelint se integró en el workflow de desarrollo de las siguientes maneras:
-
-1. *Validación manual*: Ejecutar `npm run lint:css` antes de commits
-2. *VS Code*: *[TODO: Si instalaste la extensión de Stylelint]*
-3. *Pre-build*: *[TODO: Si añadiste validación antes del build]*
-
-== Resultados de la validación
-
-Tras configurar Stylelint y aplicar las reglas, el proyecto cumple con:
-
-- ✅ 100% de clases CSS siguiendo nomenclatura BEM
-- ✅ Código formateado consistentemente
-- ✅ No se detectan errores de sintaxis
-- ✅ Funciones CSS modernas validadas correctamente
-- ✅ At-rules personalizadas permitidas
+No obstante, existen errores que requieren intervención manual del desarrollador, particularmente aquellos relacionados con aspectos estructurales o semánticos del código. Entre estos se incluyen los nombres de clase que no se ajustan a la nomenclatura BEM, los selectores que presentan problemas de especificidad y las reglas CSS duplicadas, casos en los que la herramienta únicamente señala el problema sin proporcionar una solución automática.
 
 = Características de Sass implementadas
 

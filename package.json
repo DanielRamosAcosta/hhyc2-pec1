@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:docs": "typst compile --root /Users/danielramos/Documents/university docs/main.typ",
     "preview": "vite preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
