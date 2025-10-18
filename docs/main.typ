@@ -752,7 +752,13 @@ Se verificó el cumplimiento de otros criterios: estructura semántica HTML5, je
 
 == Uso de Inteligencia Artificial
 
-TODO
+La normativa de la UOC exige especificar el uso de inteligencia artificial en los proyectos académicos, por lo que en esta sección se detallan los aspectos en los que se ha empleado esta tecnología.
+
+Se ha utilizado principalmente para *generar los textos de ejemplo* que aparecen en la página web, adoptando un estilo propio del marketing y la documentación técnica, con el objetivo de proporcionar contenido coherente y profesional para la maquetación.
+
+Asimismo, se ha empleado como herramienta de *proofreading de este informe*, corrigiendo aspectos formales y estilísticos. No obstante, es importante señalar que *el contenido y la redacción original son enteramente propios*, habiendo utilizado la IA únicamente para pulir la presentación formal del texto.
+
+No se ha empleado inteligencia artificial para la generación de imágenes ni para ningún otro propósito adicional. La herramienta específica utilizada ha sido *Claude*.
 
 == Objetivos alcanzados
 
