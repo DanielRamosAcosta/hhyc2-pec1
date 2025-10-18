@@ -1,9 +1,14 @@
 @use "variables" as *;
+@use "layout" as *;
 
 .footer {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   color: #e0e0e0;
   padding-block: $space-3xl;
+
+  &__container {
+    @include container-base;
+  }
 
   &__content {
     display: grid;

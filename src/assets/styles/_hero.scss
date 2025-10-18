@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "layout" as *;
 
 .hero {
   position: relative;
@@ -20,7 +21,10 @@
   }
 
   &__content {
+    @include container-base;
+
     z-index: 1;
+    text-align: center;
   }
 
   &__title {

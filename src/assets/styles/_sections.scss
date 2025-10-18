@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "layout" as *;
 
 .section {
   padding-block: $space-3xl;
@@ -13,6 +14,10 @@
 
   &--alt {
     background-color: $color-bg-alt;
+  }
+
+  &__container {
+    @include container-base;
   }
 
   &__header {

@@ -1,19 +1,8 @@
 @use "variables" as *;
 
-// Text alignment
-.text-center {
-  text-align: center;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
-}
-
-// Visibility
+// BEM Exception: Accessibility utility
+// .sr-only is kept as a standard accessibility pattern
+// Reference: https://www.a11yproject.com/posts/how-to-hide-content/
 .sr-only {
   position: absolute;
   inline-size: 1px;
@@ -24,29 +13,4 @@
   clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
-}
-
-// Spacing utilities
-.mt-sm {
-  margin-block-start: $space-sm;
-}
-
-.mt-md {
-  margin-block-start: $space-md;
-}
-
-.mt-lg {
-  margin-block-start: $space-lg;
-}
-
-.mb-sm {
-  margin-block-end: $space-sm;
-}
-
-.mb-md {
-  margin-block-end: $space-md;
-}
-
-.mb-lg {
-  margin-block-end: $space-lg;
 }

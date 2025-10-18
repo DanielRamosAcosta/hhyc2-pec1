@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "layout" as *;
 
 .nav {
   position: sticky;
@@ -9,6 +10,8 @@
   z-index: 100;
 
   &__container {
+    @include container-base;
+
     display: flex;
     align-items: center;
     justify-content: space-between;

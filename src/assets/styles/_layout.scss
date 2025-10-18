@@ -1,7 +1,8 @@
 @use "variables" as *;
 
-// Container
-.container {
+// BEM: Container mixin for reuse across components
+// stylelint-disable no-invalid-position-declaration -- Mixin with logical properties
+@mixin container-base {
   inline-size: 100%;
   margin-inline: auto;
   padding-inline: $space-sm;
@@ -24,49 +25,4 @@
     max-inline-size: $container-xl;
   }
 }
-
-// Section spacing
-.section {
-  padding-block: $space-2xl;
-
-  @media (width >= 768px) {
-    padding-block: $space-3xl;
-  }
-}
-
-// Grid utilities
-.grid {
-  display: grid;
-  gap: $space-md;
-}
-
-.grid-cols-2 {
-  @media (width >= 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.grid-cols-3 {
-  @media (width >= 1024px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-// Flex utilities
-.flex {
-  display: flex;
-  gap: $space-md;
-}
-
-.flex-center {
-  align-items: center;
-  justify-content: center;
-}
-
-.flex-between {
-  justify-content: space-between;
-}
-
-.flex-column {
-  flex-direction: column;
-}
+// stylelint-enable no-invalid-position-declaration
