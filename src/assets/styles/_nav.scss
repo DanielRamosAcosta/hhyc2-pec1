@@ -1,7 +1,3 @@
-// =============================================================================
-// NAV - Navigation component with BEM
-// =============================================================================
-
 @use "variables" as *;
 
 .nav {
@@ -62,6 +58,7 @@
     inset-inline-start: -100%;
     inline-size: 70%;
     block-size: 100vh;
+    margin-block-end: 0;
     background-color: $color-bg;
     padding-block-start: $space-3xl;
     padding-inline: $space-lg;
