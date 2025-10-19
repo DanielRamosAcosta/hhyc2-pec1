@@ -6,18 +6,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-block-size: 60vh;
+  min-height: 60vh;
   background: linear-gradient(135deg, $color-primary 0%, $color-accent 100%);
   color: $color-bg;
   text-align: center;
-  padding-block: $space-3xl;
+  padding-top: $space-3xl;
+  padding-bottom: $space-3xl;
 
   @media (width >= 768px) {
-    min-block-size: 80vh;
+    min-height: 80vh;
   }
 
   @media (width >= 1024px) {
-    min-block-size: 100vh;
+    min-height: 100vh;
   }
 
   &__content {
@@ -46,12 +47,11 @@
   &__cta {
     display: inline-flex;
     align-items: center;
-    color: #ffffff;
-    inset-block-end: 0px;
     gap: $space-xs;
     padding-block: $space-sm;
     padding-inline: $space-lg;
     background-color: $color-bg;
+    color: $color-primary;
     font-size: $font-size-lg;
     font-weight: 700;
     border-radius: $radius-lg;
