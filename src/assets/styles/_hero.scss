@@ -46,11 +46,12 @@
   &__cta {
     display: inline-flex;
     align-items: center;
+    color: #ffffff;
+    inset-block-end: 0px;
     gap: $space-xs;
     padding-block: $space-sm;
     padding-inline: $space-lg;
     background-color: $color-bg;
-    color: $color-primary;
     font-size: $font-size-lg;
     font-weight: 700;
     border-radius: $radius-lg;
