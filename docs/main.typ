@@ -43,10 +43,10 @@ Para poder realizar una investigación más profunda sobre las herramientas mode
 
 Las principales razones para este cambio fueron:
 
-1. *Modernidad tecnológica*: Vite representa la última generación de bundlers, con un enfoque en velocidad y experiencia de desarrollo
-2. *Relevancia profesional*: Vite es ampliamente utilizado en la industria actual, facilitando la transferencia de conocimientos al entorno laboral
+1. *Modernidad tecnológica*: Vite representa la última generación de bundlers, con un enfoque en velocidad y experiencia de desarrollo @ViteWhyVite
+2. *Relevancia profesional*: Vite es ampliamente utilizado en la industria actual, facilitando la transferencia de conocimientos al entorno laboral @ModernJSBundlers2025
 3. *Aprendizaje avanzado*: Permite explorar características cutting-edge del ecosistema JavaScript/CSS
-4. *Performance mejorada*: Hot Module Replacement (HMR) más rápido y builds de producción optimizados
+4. *Performance mejorada*: Hot Module Replacement (HMR) más rápido y builds de producción optimizados @ViteWhyVite
 
 Esta propuesta fue validada y aprobada por el profesor de la asignatura mediante comunicación por correo electrónico, condicionada a una justificación técnica adecuada en esta documentación.
 
@@ -56,42 +56,84 @@ Esta propuesta fue validada y aprobada por el profesor de la asignatura mediante
 
 Antes de proceder con el cambio, se realizó un análisis exhaustivo del stack tecnológico propuesto en el UOC Boilerplate v3.12.0:
 
-*Build System*
+=== Build System
 
-- *Parcel v2* - Module bundler principal que orquesta todo el proceso de compilación
+#figure(
+  table(
+    columns: (auto, 1fr),
+    [*Herramienta*], [*Descripción*],
+    [Parcel v2], [Module bundler principal que orquesta todo el proceso de compilación],
+  ),
+  caption: [Sistema de construcción del UOC Boilerplate]
+)
 
-*Estilos (CSS)*
+=== Procesamiento de Estilos (CSS)
 
-- *Sass/SCSS* - Preprocesador CSS (`@parcel/transformer-sass`)
-- *PostCSS* - Transformaciones CSS (`@parcel/transformer-postcss`)
-  - Autoprefixer - Añade vendor prefixes automáticamente
-  - postcss-preset-env - Permite usar CSS moderno con compatibilidad hacia atrás
-- *LightningCSS* - Minificación y optimización de CSS en producción (`@parcel/optimizer-css`)
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    [*Herramienta*], [*Paquete*], [*Propósito*],
+    [Sass/SCSS], [`@parcel/transformer-sass`], [Preprocesador CSS con variables, nesting y mixins],
+    [PostCSS], [`@parcel/transformer-postcss`], [Transformaciones CSS post-procesamiento],
+    [└ Autoprefixer], [Plugin], [Añade vendor prefixes automáticamente],
+    [└ postcss-preset-env], [Plugin], [Permite usar CSS moderno con compatibilidad hacia atrás],
+    [LightningCSS], [`@parcel/optimizer-css`], [Minificación y optimización de CSS en producción],
+  ),
+  caption: [Herramientas de procesamiento CSS]
+)
 
-*HTML*
+=== Procesamiento de HTML
 
-- *PostHTML* - Transformaciones HTML (`@parcel/transformer-posthtml`)
-  - posthtml-include - Permite incluir archivos HTML parciales con `<include src="..."></include>`
-- *htmlnano* - Minificación de HTML en producción (`@parcel/optimizer-htmlnano`)
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    [*Herramienta*], [*Paquete*], [*Propósito*],
+    [PostHTML], [`@parcel/transformer-posthtml`], [Transformaciones y procesamiento de HTML],
+    [└ posthtml-include], [Plugin], [Permite incluir archivos HTML parciales con `<include src="...">`],
+    [htmlnano], [`@parcel/optimizer-htmlnano`], [Minificación de HTML en producción],
+  ),
+  caption: [Herramientas de procesamiento HTML]
+)
 
-*JavaScript*
+=== Procesamiento de JavaScript
 
-- *Babel* - Transpilador de ES6+ a JavaScript compatible con navegadores antiguos (`@parcel/transformer-babel`)
-- *SWC* - Minificación y optimización de JS en producción (`@parcel/optimizer-swc`)
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    [*Herramienta*], [*Paquete*], [*Propósito*],
+    [Babel], [`@parcel/transformer-babel`], [Transpilador de ES6+ a JavaScript compatible con navegadores antiguos],
+    [SWC], [`@parcel/optimizer-swc`], [Minificación y optimización de JS en producción],
+  ),
+  caption: [Herramientas de procesamiento JavaScript]
+)
 
-*Imágenes*
+=== Optimización de Imágenes
 
-- *Sharp* - Transformación y optimización de imágenes (`@parcel/transformer-image`)
-  - Permite conversiones de formato (ej: WebP)
-  - Permite redimensionamiento mediante query parameters
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    [*Herramienta*], [*Paquete*], [*Propósito*],
+    [Sharp], [`@parcel/transformer-image`], [Transformación y optimización de imágenes],
+    [], [], [• Conversiones de formato (ej: WebP)],
+    [], [], [• Redimensionamiento mediante query parameters],
+  ),
+  caption: [Herramientas de optimización de imágenes]
+)
 
-*Desarrollo*
+=== Herramientas de Desarrollo
 
-- Servidor de desarrollo integrado en Parcel con live reload
-- *npm-run-all* - Para ejecutar múltiples comandos npm en secuencia
-- *rimraf* - Para limpiar carpetas de manera cross-platform
+#figure(
+  table(
+    columns: (auto, 1fr),
+    [*Herramienta*], [*Descripción*],
+    [Dev Server], [Servidor de desarrollo integrado en Parcel con live reload],
+    [npm-run-all], [Ejecución de múltiples comandos npm en secuencia],
+    [rimraf], [Limpieza de carpetas de manera cross-platform],
+  ),
+  caption: [Herramientas de desarrollo]
+)
 
-*Compatibilidad*
+=== Configuración de Compatibilidad
 
 Target de navegadores configurado: `last 2 versions, > 0.5%, not dead`
 
@@ -220,13 +262,13 @@ Esta sección justifica la elección de BEM como metodología de arquitectura CS
 
 == Análisis de metodologías disponibles
 
-En relación con las diversas arquitecturas y metodologías CSS analizadas, *OOCSS* se posiciona como una solución intermedia entre los enfoques utility-first y las metodologías orientadas a componentes como BEM. No obstante, esta aproximación presenta limitaciones significativas, particularmente la tendencia a generar una proliferación descontrolada de clases o la necesidad de crear clases excesivamente específicas para casos particulares, lo cual puede comprometer la mantenibilidad del código a largo plazo.
+En relación con las diversas arquitecturas y metodologías CSS analizadas, *OOCSS* se posiciona como una solución intermedia entre los enfoques utility-first y las metodologías orientadas a componentes como BEM. No obstante, esta aproximación presenta limitaciones significativas, particularmente la tendencia a generar una proliferación descontrolada de clases o la necesidad de crear clases excesivamente específicas para casos particulares, lo cual puede comprometer la mantenibilidad del código a largo plazo @CSSMethodologiesComparison.
 
-Por su parte, *SMACSS* podría resultar viable en el contexto de un sistema de diseño cerrado y bien definido. Sin embargo, su principal debilidad radica en la excesiva estratificación de la arquitectura CSS, especialmente en la distinción entre las capas de layout y module. Desde una perspectiva contemporánea de desarrollo, resulta más coherente adoptar un concepto unificado de "componente" que englobe tanto elementos como cards o headers, sin establecer distinciones innecesarias entre ellos, ya que ambos constituyen unidades funcionales equivalentes dentro de la interfaz.
+Por su parte, *SMACSS* podría resultar viable en el contexto de un sistema de diseño cerrado y bien definido. Sin embargo, su principal debilidad radica en la excesiva estratificación de la arquitectura CSS, especialmente en la distinción entre las capas de layout y module @OrganizingCSS. Desde una perspectiva contemporánea de desarrollo, resulta más coherente adoptar un concepto unificado de "componente" que englobe tanto elementos como cards o headers, sin establecer distinciones innecesarias entre ellos, ya que ambos constituyen unidades funcionales equivalentes dentro de la interfaz.
 
-*ITCSS* adolece de problemas similares a los de SMACSS, manifestando una organización excesivamente fragmentada en múltiples capas que dificulta la cohesión del sistema. Esta complejidad estructural puede obstaculizar tanto el desarrollo como el mantenimiento del código en proyectos reales.
+*ITCSS* adolece de problemas similares a los de SMACSS, manifestando una organización excesivamente fragmentada en múltiples capas que dificulta la cohesión del sistema @ITCSSArchitecture. Esta complejidad estructural puede obstaculizar tanto el desarrollo como el mantenimiento del código en proyectos reales.
 
-En contraste, *BEM* emerge como la alternativa más sólida y pragmática. Su principal fortaleza reside en la cohesión que proporciona al estructurar el CSS en torno al concepto de bloque, equivalente al concepto de componente. Adicionalmente, su sistema de nomenclatura específico previene eficazmente los conflictos de especificidad, un problema recurrente en proyectos de envergadura. Por estas razones, BEM ha sido seleccionado como la metodología base para este proyecto.
+En contraste, *BEM* emerge como la alternativa más sólida y pragmática. Su principal fortaleza reside en la cohesión que proporciona al estructurar el CSS en torno al concepto de bloque, equivalente al concepto de componente. Adicionalmente, su sistema de nomenclatura específico previene eficazmente los conflictos de especificidad, un problema recurrente en proyectos de envergadura @BEMSMACSSSitePoint @OrganizingCSS. Por estas razones, BEM ha sido seleccionado como la metodología base para este proyecto.
 
 == Justificación de la elección de BEM
 
@@ -312,7 +354,7 @@ Aunque BEM especifica estructurar el código mediante la convención block-eleme
 
 === Reflexión sobre BEM y su vigencia en la actualidad
 
-Como consideración adicional para futuras investigaciones, resulta pertinente explorar el desarrollo de arquitecturas CSS alternativas. Es fundamental que como profesionales en formación comprendamos estas arquitecturas y metodologías dentro de su contexto histórico específico. La evolución reciente del estándar CSS, particularmente con la incorporación nativa de CSS Nesting y la directiva `@layer`, abre nuevas posibilidades arquitectónicas. Estos avances sugieren que sería factible desarrollar una arquitectura más simplificada que BEM, manteniendo simultáneamente niveles equivalentes de cohesión y capacidad para prevenir problemas de especificidad, adaptándose así a las capacidades actuales del lenguaje.
+Como consideración adicional para futuras investigaciones, resulta pertinente explorar el desarrollo de arquitecturas CSS alternativas. Es fundamental que como profesionales en formación comprendamos estas arquitecturas y metodologías dentro de su contexto histórico específico. La evolución reciente del estándar CSS, particularmente con la incorporación nativa de CSS Nesting y la directiva `@layer`, abre nuevas posibilidades arquitectónicas @ModernCSS2024 @ModernCSSvsSass2025. Estos avances sugieren que sería factible desarrollar una arquitectura más simplificada que BEM, manteniendo simultáneamente niveles equivalentes de cohesión y capacidad para prevenir problemas de especificidad, adaptándose así a las capacidades actuales del lenguaje.
 
 = Configuración de Stylelint
 
@@ -444,14 +486,14 @@ El proyecto no requirió funciones Sass personalizadas complejas, pero se aprove
 ```scss
 .nav__logo {
   color: $color-primary;
-  
+
   &:hover {
     color: color-mix(in oklch, $color-primary 80%, black);
   }
 }
 ```
 
-En este caso, se utiliza la función nativa de CSS `color-mix()` (transformada durante la compilación mediante PostCSS para garantizar la compatibilidad con navegadores) junto con el moderno espacio de color OKLCH para oscurecer el color primario en el estado hover. La ventaja de emplear OKLCH en este contexto radica en que proporciona una interpolación perceptualmente uniforme, generando transiciones de color más naturales y consistentes en comparación con espacios de color tradicionales como HSL. Esto resulta en un oscurecimiento más predecible y visualmente coherente, donde la percepción humana del cambio de luminosidad se mantiene constante independientemente del tono del color base.
+En este caso, se utiliza la función nativa de CSS `color-mix()` (transformada durante la compilación mediante PostCSS para garantizar la compatibilidad con navegadores) junto con el moderno espacio de color OKLCH para oscurecer el color primario en el estado hover. La ventaja de emplear OKLCH en este contexto radica en que proporciona una interpolación perceptualmente uniforme, generando transiciones de color más naturales y consistentes en comparación con espacios de color tradicionales como HSL @OKLCHEvilMartians @OKLCHMDN. Esto resulta en un oscurecimiento más predecible y visualmente coherente, donde la percepción humana del cambio de luminosidad se mantiene constante independientemente del tono del color base.
 
 ```scss
 $font-size-h1: clamp(2rem, 5vw, 3.5rem);
@@ -560,11 +602,11 @@ Esta sección documenta la estrategia responsive implementada en el proyecto, in
 
 El proyecto adoptó un enfoque mobile-first, donde los estilos base se definen para dispositivos móviles y posteriormente se añaden adaptaciones para pantallas más grandes mediante media queries. Esta aproximación se fundamenta en las siguientes razones:
 
-1. *Priorización de contenido*: El diseño mobile-first obliga a identificar y priorizar los elementos esenciales de la interfaz, eliminando elementos superfluos y centrándose en la experiencia del usuario.
+1. *Priorización de contenido*: El diseño mobile-first obliga a identificar y priorizar los elementos esenciales de la interfaz, eliminando elementos superfluos y centrándose en la experiencia del usuario @MobileFirstDesignFigma.
 
 2. *Progressive enhancement*: Se añaden features y complejidad visual progresivamente para pantallas más grandes, garantizando que la experiencia base funcione en todos los dispositivos.
 
-3. *Tendencia actual del tráfico web*: La mayoría del tráfico web proviene de dispositivos móviles, por lo que priorizar esta experiencia resulta coherente con los patrones de uso reales.
+3. *Tendencia actual del tráfico web*: La mayoría del tráfico web proviene de dispositivos móviles, por lo que priorizar esta experiencia resulta coherente con los patrones de uso reales @MobileDesktopUsage2025.
 
 == Breakpoints definidos
 
@@ -687,7 +729,7 @@ En cuanto al desarrollo, como se ha mencionado anteriormente, se ha seleccionado
 
 Otro aspecto relevante del enfoque adoptado es la priorización de *características modernas nativas de CSS*, considerando más pertinente aprovechar funcionalidades que forman parte del estándar actual del lenguaje en lugar de depender exclusivamente de las capacidades proporcionadas por preprocesadores específicos.
 
-De hecho, resulta cada vez más complejo justificar la dependencia absoluta de preprocesadores CSS, dado que el *estándar del lenguaje ha experimentado avances significativos* en los últimos años, incorporando de forma nativa las características más relevantes que anteriormente requerían el uso de estas herramientas adicionales.
+De hecho, resulta cada vez más complejo justificar la dependencia absoluta de preprocesadores CSS, dado que el *estándar del lenguaje ha experimentado avances significativos* en los últimos años, incorporando de forma nativa las características más relevantes que anteriormente requerían el uso de estas herramientas adicionales @ModernCSSvsSass2025 @ModernCSS2024.
 
 == Dependencias externas añadidas
 
@@ -789,6 +831,6 @@ Los principales aprendizajes obtenidos durante el desarrollo de esta práctica h
 
 *Sobre accesibilidad*: Gracias a las asignaturas previas vistas en el máster, ya se disponía de *nociones fundamentales sobre accesibilidad web*. Sin embargo, no se conocía específicamente la *regla WCAG 3.2.5*, que establece la obligación de avisar explícitamente a los usuarios sobre los cambios de contexto que puedan producirse durante la navegación, aspecto que ha sido necesario implementar en este proyecto.
 
-*Sobre la evolución de preprocesadores*: Una de las reflexiones más relevantes surgidas durante el desarrollo del proyecto es si realmente sigue siendo necesario utilizar Sass en 2025. La mayoría de las *características estrella de Sass* (como variables, _nesting_ y funciones de color) forman ya parte del estándar de CSS nativo, por lo que estas funcionalidades están cubiertas sin necesidad de preprocesadores adicionales. Esta evolución del lenguaje plantea cuestionamientos legítimos sobre la *pertinencia de mantener dependencias* de herramientas que históricamente resolvían limitaciones que el estándar actual ha superado.
+*Sobre la evolución de preprocesadores*: Una de las reflexiones más relevantes surgidas durante el desarrollo del proyecto es si realmente sigue siendo necesario utilizar Sass en 2025 @ModernCSSvsSass2025. La mayoría de las *características estrella de Sass* (como variables, _nesting_ y funciones de color) forman ya parte del estándar de CSS nativo, por lo que estas funcionalidades están cubiertas sin necesidad de preprocesadores adicionales. Esta evolución del lenguaje plantea cuestionamientos legítimos sobre la *pertinencia de mantener dependencias* de herramientas que históricamente resolvían limitaciones que el estándar actual ha superado.
 
 #bibliography("./references.bib")
