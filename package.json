@@ -10,8 +10,8 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint:css": "stylelint \"**/*.{css,scss}\"",
-    "lint:css:fix": "stylelint \"**/*.{css,scss}\" --fix"
+    "lint:css": "stylelint \"**/*.scss\"",
+    "lint:css:fix": "stylelint \"**/*.scss\" --fix"
   },
   "devDependencies": {
     "@vituum/vite-plugin-posthtml": "^1.1.0",
@@ -32,7 +32,7 @@
   "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"
   },
-  "browserslist": "last 2 versions, > 0.5%, not dead",
+  "browserslist": "> 0.1%, IE >= 6, Chrome >= 1, Firefox >= 1.5, Safari >= 1, Opera >= 8",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",
     "modern-normalize": "^3.0.1",
