@@ -32,7 +32,7 @@
   "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"
   },
-  "browserslist": "> 0.1%, IE >= 6, Chrome >= 1, Firefox >= 1.5, Safari >= 1, Opera >= 8",
+  "browserslist": "last 2 versions, > 0.5%, not dead",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",
     "modern-normalize": "^3.0.1",
