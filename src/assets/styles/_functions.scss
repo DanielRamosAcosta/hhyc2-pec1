@@ -1,0 +1,72 @@
+@use "sass:math";
+@use "sass:meta";
+
+/// Convert pixels to rem units
+/// @param {Number} $pixels - The pixel value to convert
+/// @param {Number} $base [16] - The base font size in pixels
+/// @return {Number} - The converted rem value
+@function rem($pixels, $base: 16) {
+  @if math.is-unitless($pixels) {
+    @return math.div($pixels, $base) * 1rem;
+  } @else if math.unit($pixels) == "px" {
+    @return math.div($pixels, $base * 1px) * 1rem;
+  } @else {
+    @error "rem() expects a unitless number or px value, got #{$pixels}";
+  }
+}
+
+
+/// Tint a color by mixing it with white
+/// @param {Color} $color - The color to tint
+/// @param {Number} $percentage - The percentage of white to mix (0-100)
+/// @return {Color} - The tinted color
+@function tint($color, $percentage) {
+  @return color-mix(in oklab, $color (100% - $percentage), white $percentage);
+}
+
+/// Shade a color by mixing it with black
+/// @param {Color} $color - The color to shade
+/// @param {Number} $percentage - The percentage of black to mix (0-100)
+/// @return {Color} - The shaded color
+@function shade($color, $percentage) {
+  @return color-mix(in oklab, $color (100% - $percentage), black $percentage);
+}
+
+/// Create a transparent version of a color
+/// @param {Color} $color - The color to make transparent
+/// @param {Number} $alpha - The alpha value (0-1) or percentage (0%-100%)
+/// @return {Color} - The color with applied opacity
+@function alpha($color, $alpha) {
+  @if meta.type-of($alpha) == "number" {
+    @if math.unit($alpha) == "%" {
+      $alpha: math.div($alpha, 100%);
+    }
+
+    @return color-mix(in oklab, $color ($alpha * 100%), transparent);
+  } @else {
+    @error "alpha() expects a number, got #{$alpha}";
+  }
+}
+
+/// Get z-index value from a predefined scale
+/// @param {String} $layer - The layer name
+/// @return {Number} - The z-index value
+@function z($layer) {
+  $z-layers: (
+    "base": 0,
+    "dropdown": 100,
+    "sticky": 200,
+    "fixed": 300,
+    "modal-backdrop": 400,
+    "modal": 500,
+    "popover": 600,
+    "tooltip": 700
+  );
+
+  @if map-has-key($z-layers, $layer) {
+    @return map-get($z-layers, $layer);
+  }
+
+  @warn "Unknown z-index layer: #{$layer}. Available layers: #{map-keys($z-layers)}";
+  @return 0;
+}

@@ -379,16 +379,51 @@ Finalmente, `stylelint-scss` añade soporte específico para las característica
 
 == Configuración de `.stylelintrc.json`
 
-El archivo de configuración se estructuró de la siguiente manera:
+El archivo de configuración extiende la configuración estándar de `stylelint-config-standard-scss` y añade un conjunto de reglas personalizadas adaptadas a las necesidades del proyecto @StylelintCustomize. A continuación se destacan las tres reglas más significativas implementadas:
+
+=== Validación de nomenclatura BEM
+
+La regla `selector-class-pattern` valida que todas las clases sigan estrictamente el patrón BEM:
 
 ```json
 {
-  "extends": ["stylelint-config-standard-scss"],
-  "plugins": ["stylelint-selector-bem-pattern"]
+  "selector-class-pattern": [
+    "^[a-z]([a-z0-9-]+)?(__([a-z0-9]+-?)+)?(--([a-z0-9]+-?)+)?$",
+    {
+      "message": "Class names should follow BEM pattern: .block__element--modifier"
+    }
+  ]
 }
 ```
 
-Se ha validado que con esta configuración básica, Stylelint ya aplica un conjunto sólido de reglas para mantener la calidad del código CSS/SCSS, incluyendo la validación de la sintaxis SCSS y la aplicación de buenas prácticas generales y reglas BEM.
+Esta expresión regular permite bloques (`.nav`), elementos (`.nav__menu`), modificadores (`.nav__menu--active`), y combinaciones válidas, mientras rechaza patrones incorrectos como `.Nav`, `.nav-menu` o `.nav_menu` @StylelintImproveCSS.
+
+=== Restricción de selectores de ID
+
+Para evitar problemas de especificidad y mantener la modularidad del CSS, se prohíbe completamente el uso de selectores de ID:
+
+```json
+{
+  "selector-max-id": 0
+}
+```
+
+Esta regla fuerza el uso exclusivo de clases para el styling, alineándose con las mejores prácticas de CSS modular y escalable. Los IDs quedan reservados únicamente para JavaScript y anclajes de navegación @LintingLogicalCSS.
+
+=== Notación moderna de funciones de color
+
+Se impone el uso de la notación funcional moderna para colores:
+
+```json
+{
+  "color-function-notation": "modern",
+  "alpha-value-notation": "number"
+}
+```
+
+Esto enforce el uso de `rgb(255 0 0)` en lugar de `rgb(255, 0, 0)`, y `oklch(0.65 0.2 240deg)` en lugar de sintaxis legacy, promoviendo código más legible y preparado para futuros estándares CSS.
+
+Además de estas reglas principales, el archivo `.stylelintrc.json` incluye configuraciones para limitar la especificidad de selectores, enforcar nomenclatura kebab-case en variables y funciones SCSS, y validar el uso de propiedades lógicas, entre otras. La configuración completa puede consultarse en el repositorio del proyecto.
 
 == Proceso de validación
 
@@ -481,30 +516,65 @@ Este enfoque de anidado mantiene la estructura BEM mientras agrupa visualmente e
 
 == Funciones personalizadas
 
-El proyecto no requirió funciones Sass personalizadas complejas, pero se aprovecharon las funciones nativas de CSS modernas que PostCSS transpila para compatibilidad con navegadores más antiguos. En concreto, se ha hecho uso de la función `color-mix()` para crear variantes de color dinámicas y de `clamp()` para definir tamaños de fuente fluidos.
+Para facilitar el desarrollo y mantener la consistencia del código, se creó un archivo `_functions.scss` con un conjunto de utilidades Sass reutilizables que están todas en uso activo en el proyecto. Las funciones se organizan en tres categorías:
+
+=== Conversión de unidades
+
+La función `rem()` convierte valores de píxeles a unidades `rem`, respetando las mejores prácticas de accesibilidad:
 
 ```scss
-.nav__logo {
-  color: $color-primary;
-
-  &:hover {
-    color: color-mix(in oklch, $color-primary 80%, black);
-  }
+@function rem($pixels, $base: 16) {
+  @return math.div($pixels, $base) * 1rem;
 }
 ```
 
-En este caso, se utiliza la función nativa de CSS `color-mix()` (transformada durante la compilación mediante PostCSS para garantizar la compatibilidad con navegadores) junto con el moderno espacio de color OKLCH para oscurecer el color primario en el estado hover. La ventaja de emplear OKLCH en este contexto radica en que proporciona una interpolación perceptualmente uniforme, generando transiciones de color más naturales y consistentes en comparación con espacios de color tradicionales como HSL @OKLCHEvilMartians @OKLCHMDN. Esto resulta en un oscurecimiento más predecible y visualmente coherente, donde la percepción humana del cambio de luminosidad se mantiene constante independientemente del tono del color base.
+Esta función utiliza `math.div()` en lugar del obsoleto operador `/` @SassDeprecations y se emplea para mantener consistencia en el sizing. Acepta tanto valores unitless como valores en píxeles: `rem(24)` o `rem(24px)` producen el mismo resultado de `1.5rem`.
+
+=== Manipulación de color
+
+Se implementaron tres funciones para crear variantes cromáticas consistentes, aprovechando la función moderna `color-mix()` con el espacio de color OKLCH:
 
 ```scss
-$font-size-h1: clamp(2rem, 5vw, 3.5rem);
-$font-size-h2: clamp(1.75rem, 4vw, 2.5rem);
+@function tint($color, $percentage) {
+  @return color-mix(in oklab, $color (100% - $percentage), white $percentage);
+}
+
+@function shade($color, $percentage) {
+  @return color-mix(in oklab, $color (100% - $percentage), black $percentage);
+}
+
+@function alpha($color, $alpha) {
+  @return color-mix(in oklab, $color ($alpha * 100%), transparent);
+}
 ```
 
-La función `clamp()` establece un tamaño de fuente fluido que se adapta responsivamente al viewport, definiendo tres valores: un tamaño mínimo, un tamaño preferido basado en el ancho del viewport, y un tamaño máximo. En el primer ejemplo, el tamaño del `h1` nunca será inferior a `2rem` ni superior a `3.5rem`, ajustándose dinámicamente a `5vw` (5% del ancho del viewport) cuando este valor se encuentre entre ambos límites. Esto elimina la necesidad de utilizar media queries para adaptar la tipografía a diferentes tamaños de pantalla, proporcionando una escalabilidad fluida y automática que mejora tanto la legibilidad como la experiencia responsive del diseño.
+La función `tint()` aclara colores mezclándolos con blanco (usado en backgrounds de highlights), `shade()` los oscurece mezclándolos con negro (usado en estados hover), y `alpha()` ajusta la transparencia (usado para sombras). El uso de OKLCH proporciona interpolaciones perceptualmente uniformes, generando transiciones más naturales que los espacios de color tradicionales RGB o HSL @OKLCHEvilMartians.
+
+=== Sistema de z-index semántico
+
+Se implementó un sistema de z-index basado en capas semánticas predefinidas para evitar "números mágicos" @JerzykMadeyskiCodeSmells2023 en el código:
+
+```scss
+@function z($layer) {
+  $z-layers: (
+    "base": 0,
+    "dropdown": 100,
+    "sticky": 200,
+    "fixed": 300,
+    "modal-backdrop": 400,
+    "modal": 500,
+    "popover": 600,
+    "tooltip": 700
+  );
+  @return map-get($z-layers, $layer);
+}
+```
+
+Este sistema centraliza la gestión del `z-index`, previniendo conflictos mediante una jerarquía explícita. Se invoca con `z-index: z("sticky")` en lugar de valores arbitrarios, facilitando el mantenimiento y la comprensión de las capas. En el proyecto se aplica a la navegación sticky (`z("sticky")`), el menú móvil (`z("dropdown")`), y elementos de hero (`z("base") + 1`).
 
 == Parciales e importación
 
-El código Sass se organizó en parciales siguiendo una arquitectura modular:
+El código Sass se organizó usando una mezcla de BEM, orientando a componentes modulares (como `_nav.scss`, `_hero.scss`), pero también usando un enfoque de base layout para estilos globales, pero sólo para la base (declaradas en el fichero `_base.scss`). La estructura de archivos es la siguiente:
 
 ```
 src/
@@ -512,6 +582,7 @@ src/
 │   └── styles/
 │       ├── _variables.scss     # Variables globales (colores, espaciado, etc.)
 │       ├── _base.scss          # Estilos base y reset
+│       ├── _functions.scss     # Funciones Sass reutilizables
 │       ├── _layout.scss        # Sistema de layout y contenedores
 │       ├── _nav.scss           # Componente navegación
 │       ├── _hero.scss          # Componente hero
@@ -811,7 +882,7 @@ Esta práctica ha permitido cumplir satisfactoriamente todos los objetivos plant
 
 3. *Configuración de herramientas de calidad*: Stylelint se ha integrado correctamente con reglas personalizadas que garantizan el cumplimiento de las convenciones SCSS y BEM, mientras que Prettier asegura un formato consistente en todo el código.
 
-4. *Dominio de características de Sass*: Se han implementado todas las características requeridas: variables centralizadas en `_variables.scss`, anidado con sintaxis BEM, funciones CSS modernas (`clamp()`, `color-mix()`), arquitectura de parciales modular, y mixins reutilizables como `container-base`.
+4. *Dominio de características de Sass*: Se han implementado todas las características requeridas: variables centralizadas en `_variables.scss`, anidado con sintaxis BEM, funciones CSS modernas (`clamp()`, `color-mix()`), arquitectura de parciales modular, uso de funciones personalizadas, y mixins reutilizables como `container-base`.
 
 5. *Diseño responsive mobile-first*: El proyecto emplea un enfoque mobile-first con breakpoints a 640px, 768px, 1024px y 1280px, utilizando técnicas modernas como tipografía fluida con `clamp()` y layouts adaptativos con CSS Grid.
 

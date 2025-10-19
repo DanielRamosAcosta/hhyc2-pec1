@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "functions" as *;
 @use "layout" as *;
 
 .nav {
@@ -7,7 +8,7 @@
   inline-size: 100%;
   background-color: $color-bg;
   box-shadow: $shadow-md;
-  z-index: 100;
+  z-index: z("sticky");
 
   &__container {
     @include container-base;
@@ -29,18 +30,18 @@
     text-decoration: none;
 
     i {
-      font-size: 1.5rem;
+      font-size: rem(24);
     }
 
     &:hover {
-      color: color-mix(in oklch, $color-primary 80%, black);
+      color: shade($color-primary, 20);
     }
   }
 
   &__toggle {
     display: block;
     padding: $space-xs;
-    font-size: 1.5rem;
+    font-size: rem(24);
     color: $color-text;
     background: transparent;
     border: none;
@@ -68,7 +69,7 @@
     box-shadow: $shadow-lg;
     list-style: none;
     transition: inset-inline-start $transition-base;
-    z-index: 99;
+    z-index: z("dropdown");
 
     &.show {
       inset-inline-start: 0;
@@ -104,7 +105,7 @@
     transition: color $transition-fast;
 
     i {
-      font-size: 1.25rem;
+      font-size: rem(20);
     }
 
     &:hover {

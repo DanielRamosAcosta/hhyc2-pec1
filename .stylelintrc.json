@@ -1,4 +1,145 @@
 {
   "extends": ["stylelint-config-standard-scss"],
-  "plugins": ["stylelint-selector-bem-pattern"]
+  "plugins": [],
+  "rules": {
+    "selector-class-pattern": [
+      "^[a-z]([a-z0-9-]+)?(__([a-z0-9]+-?)+)?(--([a-z0-9]+-?)+)?$",
+      {
+        "message": "Class names should follow BEM pattern: .block__element--modifier"
+      }
+    ],
+    "selector-id-pattern": null,
+    "selector-max-id": 0,
+    "selector-max-type": [
+      2,
+      {
+        "ignoreTypes": ["/^(html|body)$/"]
+      }
+    ],
+    "selector-max-compound-selectors": 4,
+    "selector-max-specificity": "0,4,0",
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": ["attribute"]
+      }
+    ],
+    "custom-property-pattern": [
+      "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+      {
+        "message": "Custom properties should be kebab-case"
+      }
+    ],
+    "declaration-block-no-redundant-longhand-properties": [
+      true,
+      {
+        "ignoreShorthands": ["grid-template", "font"]
+      }
+    ],
+    "shorthand-property-no-redundant-values": true,
+    "color-function-notation": "modern",
+    "alpha-value-notation": "number",
+    "color-hex-length": "short",
+    "color-named": "never",
+    "font-family-name-quotes": "always-where-recommended",
+    "function-url-quotes": "always",
+    "length-zero-no-unit": [
+      true,
+      {
+        "ignore": ["custom-properties"]
+      }
+    ],
+    "property-no-vendor-prefix": [
+      true,
+      {
+        "ignoreProperties": ["appearance", "backdrop-filter"]
+      }
+    ],
+    "value-no-vendor-prefix": [
+      true,
+      {
+        "ignoreValues": ["box"]
+      }
+    ],
+    "at-rule-no-vendor-prefix": true,
+    "media-feature-name-no-vendor-prefix": true,
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["v-deep", "v-global", "v-slotted"]
+      }
+    ],
+    "declaration-block-no-duplicate-properties": [
+      true,
+      {
+        "ignore": ["consecutive-duplicates-with-different-values"]
+      }
+    ],
+    "max-nesting-depth": [
+      4,
+      {
+        "ignore": ["blockless-at-rules", "pseudo-classes"]
+      }
+    ],
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["tailwind", "apply", "layer", "config"]
+      }
+    ],
+    "scss/dollar-variable-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      {
+        "message": "SCSS variables should be kebab-case"
+      }
+    ],
+    "scss/at-mixin-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      {
+        "message": "Mixins should be kebab-case"
+      }
+    ],
+    "scss/at-function-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      {
+        "message": "Functions should be kebab-case"
+      }
+    ],
+    "scss/percent-placeholder-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      {
+        "message": "Placeholders should be kebab-case"
+      }
+    ],
+    "scss/double-slash-comment-whitespace-inside": "always",
+    "scss/declaration-nested-properties": "never",
+    "scss/dimension-no-non-numeric-values": true,
+    "scss/operator-no-newline-after": true,
+    "scss/operator-no-newline-before": true,
+    "scss/operator-no-unspaced": true,
+    "scss/no-global-function-names": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": true,
+    "declaration-empty-line-before": [
+      "always",
+      {
+        "except": ["after-declaration", "first-nested"],
+        "ignore": ["after-comment", "inside-single-line-block"]
+      }
+    ],
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        "except": ["first-nested"],
+        "ignore": ["after-comment"]
+      }
+    ],
+    "comment-empty-line-before": [
+      "always",
+      {
+        "except": ["first-nested"],
+        "ignore": ["stylelint-commands"]
+      }
+    ]
+  }
 }
